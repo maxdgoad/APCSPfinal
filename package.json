@@ -1,0 +1,22 @@
+{
+  "name": "apcspfinal",
+  "version": "1.0.0",
+  "description": "Max and Richie final project",
+  "main": "start.js",
+  "scripts": {
+    "test": "fuckyou"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxdgoad/APCSPfinal.git"
+  },
+  "keywords": [
+    "emoji"
+  ],
+  "author": "max goad and richie zins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxdgoad/APCSPfinal/issues"
+  },
+  "homepage": "https://github.com/maxdgoad/APCSPfinal#readme"
+}
