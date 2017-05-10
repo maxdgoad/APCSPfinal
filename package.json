@@ -4,7 +4,7 @@
   "description": "Max and Richie final project",
   "main": "start.js",
   "scripts": {
-    "test": "fuckyou"
+    "test": ""
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/maxdgoad/APCSPfinal/issues"
   },
-  "homepage": "https://github.com/maxdgoad/APCSPfinal#readme"
+  "homepage": "https://github.com/maxdgoad/APCSPfinal#readme",
+  "devDependencies": {
+    "derby": "^0.9.7",
+    "p5": "^0.5.8"
+  }
 }
