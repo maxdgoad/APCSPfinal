@@ -8,7 +8,7 @@
         
     </head>
     
-   <body  style="background-color: #ffffff; font-family: comic sans; font-style: italic; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
+   <body  style="background-color: #ffffff; font-family: arial; font-style: italic; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
         
         <div style="text-align:left;">
 
@@ -16,9 +16,9 @@
 
                     <div style="text-align:center; padding-left:1%; padding-top:1%; font-size:300%">
 
-                        <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 2px 2px #222222;">
+                        <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 2px 2px #222222; text-decoration:none;">
 
-                            Memes Against Humanity
+                            Maverick - Test
 
                         </a>
 
@@ -27,7 +27,14 @@
 
                 </h1>
 
-            <div style="font-size: 200%"></div>
+            <div style="font-size:100%; text-align:center; position:relative; top:50%; padding-top: 12.5%">
+                <button class = "button buttonRed" onclick ="window.location.href ='test.html'">New Game</button>
+            
+            </div>
+            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
+                <button class = "button buttonRed">Browse Games</button>
+            
+            </div>
 
         </div>
 
@@ -63,12 +70,40 @@
             {
                 flex: 1;
             }
+            
+            .button 
+            {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 20px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            
+            .buttonRed
+            {
+                background-color: white; 
+                color: black; 
+                border: 4px solid #000000;
+            }
+
+            .buttonRed:hover 
+            {
+                background-color: #f44337;
+                color: white;
+            }
 
         </style>
   
     </body>
-    <script language="javascript" type="text/javascript" src="node_modules/p5/lib/addons/p5.dom.js"></script>
-    <script language="javascript" type="text/javascript" src="node_modules/p5/lib/p5.js"></script>
-    <script language="javascript" type="text/javascript" src="scripts/gumdropbuttons.js"></script>
+    <script language="javascript" type="text/javascript" src="Game.js"></script>
+    <script language="javascript" type="text/javascript" src="Player.js"></script>
     
 </html>
