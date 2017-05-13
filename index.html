@@ -5,39 +5,7 @@
     <title> 
      Memes Against Humanity
     </title> 
-        
-    </head>
-    
-   <body  style="background-color: #ffffff; font-family: arial; font-style: italic; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
-        
-        <div style="text-align:left;">
-
-                <h1 style=" background-color:#666666;">
-
-                    <div style="text-align:center; padding-left:1%; padding-top:1%; font-size:300%">
-
-                        <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 2px 2px #222222; text-decoration:none;">
-
-                            Maverick - Test
-
-                        </a>
-
-                    </div>
-
-
-                </h1>
-
-            <div style="font-size:100%; text-align:center; position:relative; top:50%; padding-top: 12.5%">
-                <button class = "button buttonRed" onclick ="window.location.href ='test.html'">New Game</button>
-            
-            </div>
-            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
-                <button class = "button buttonRed">Browse Games</button>
-            
-            </div>
-
-        </div>
-
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
         <script>
 
             function bye()
@@ -47,10 +15,114 @@
                     location.href = 'mobile.html';
                 }
 
-
             }
+            
+            function selectNew()
+            {
+                
+                document.getElementById("browse").style = "visibility: hidden; opacity: 0;transition: visibility 0s .1s, opacity .1s linear;";
+                document.getElementById("browse").style = "display:none;";
+                
+               
+                document.getElementById("newgame").style = "transform: translateY(50px); position:relative ";
+                document.getElementById("newgame").innerHTML = "Start"
+               
+                var div = document.createElement("div");
+                
+                var name = document.createElement("input");
+                name.type = "text";
+                name.style = "width: 10%; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                
+                var box = document.createElement("select");
+                box.id = "box";
+                
+                var temp;
+                for(rep = 4; rep<=8; rep++)
+                {
+                    temp = document.createElement("option");
+                    temp.value = rep;
+                    temp.innerHTML = rep;
+                    temp.style = "direction: rtl; font-size: 20px"
+                    box.appendChild(temp);
+                        
+                }
+                box.style = "width:2%; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 20px"
+                
+                div.style = "text-align: center"
+                
+                div.appendChild(box);
+                
+                var password = document.createElement("input");
+                password.type = "password";
+                password.style = "width: 10%; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                
+                var words = document.createElement("div");
+                var optional = document.createElement("div");
+                
+                words.innerHTML = "Game Name: ";
+                words.appendChild(document.createElement("br"));
+                words.appendChild(name);
+                words.style = "text-align:center;color: black"
+                
+                optional.innerHTML = "Game Password(optional): ";
+                optional.appendChild(document.createElement("br"));
+                optional.appendChild(password);
+                optional.style = "text-align: center; color: black"
+                
+                document.body.appendChild(document.createElement("br"));
+                document.body.appendChild(document.createElement("br"));
+                document.body.appendChild(document.createElement("br"));
+                document.body.appendChild(words);
+                document.body.appendChild(document.createElement("br"));
+                document.body.appendChild(optional);
+                document.body.appendChild(document.createElement("br"));
+                document.body.appendChild(div);
+                 
+                
+            }
+            
+            
 
         </script>
+        
+        <style>
+            input[type='text'] { font-size: 20px; }
+            input[type='password'] { font-size: 20px; }
+        </style>
+
+        
+    </head>
+    
+   <body  style="background-color: #ffffff; font-family: arial; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
+        
+        <div style="text-align:left;">
+
+                <h1 style=" background-color:#666666;">
+
+                    <div style="text-align:center; font-size:400%">
+
+                        <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
+
+                            memes against humanity
+
+                        </a>
+
+                    </div>
+
+
+                </h1>
+
+            <div style="font-size:100%; text-align:center; top:50%; padding-top: 12.5%">
+                <button id="newgame" class = "button buttonRed" onclick ="selectNew();">New Game</button>
+            
+            </div>
+            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
+                <button id ="browse" class = "button buttonRed">Browse Games</button>
+            
+            </div>
+
+        </div>
+
 
         <style>
 
@@ -73,9 +145,9 @@
             
             .button 
             {
-                background-color: #4CAF50; /* Green */
-                border: none;
-                color: white;
+                
+               
+               
                 padding: 16px 32px;
                 text-align: center;
                 text-decoration: none;
@@ -87,11 +159,14 @@
                 cursor: pointer;
             }
             
+            
             .buttonRed
             {
                 background-color: white; 
                 color: black; 
                 border: 4px solid #000000;
+                 position: relative;
+                
             }
 
             .buttonRed:hover 
