@@ -1,7 +1,7 @@
 class Game
 { 
     
-    constructor()
+    constructor(name, players, password)
     { 
         this.players = {};
         this.id;
