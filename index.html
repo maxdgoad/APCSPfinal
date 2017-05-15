@@ -31,8 +31,8 @@
             function selectNew(event)
             {
                 
-                document.getElementById("browse").style = "visibility: hidden; opacity: 0;transition: visibility 0s .1s, opacity .1s linear;";
                 document.getElementById("browse").style = "display:none;";
+                document.getElementById("info").style = "display:none;";
                 
                
                 document.getElementById("newgame").style = "transform: translateY(50px); position:relative ";
@@ -43,7 +43,7 @@
                 var name = document.createElement("input");
                 name.id = "gamename";
                 name.type = "text";
-                name.style = "width: 150px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                name.style = "width: 280px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
                 name.defaultValue = "";
                 
                 var box = document.createElement("select");
@@ -55,11 +55,11 @@
                     temp = document.createElement("option");
                     temp.value = rep;
                     temp.innerHTML = rep;
-                    temp.style = "direction: rtl; font-size: 20px"
+                    temp.style = "direction: rtl; font-size: 30px"
                     box.appendChild(temp);
                         
                 }
-                box.style = "width:40px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 20px"
+                box.style = "width:70px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 30px"
                 
                 div.style = "text-align: center"
                 
@@ -68,7 +68,7 @@
                 var password = document.createElement("input");
                 password.id = "pw";
                 password.type = "password";
-                password.style = "width: 150px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                password.style = "width: 280px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
                 
                 var words = document.createElement("div");
                 var optional = document.createElement("div");
@@ -76,12 +76,12 @@
                 words.innerHTML = "Game Name: ";
                 words.appendChild(document.createElement("br"));
                 words.appendChild(name);
-                words.style = "text-align:center;color: black"
+                words.style = "text-align:center;color: black; font-size:30px;"
                 
                 optional.innerHTML = "Game Password (optional): ";
                 optional.appendChild(document.createElement("br"));
                 optional.appendChild(password);
-                optional.style = "text-align: center; color: black"
+                optional.style = "text-align: center; color: black; font-size:30px"
                 
                 document.body.appendChild(document.createElement("br"));
                 document.body.appendChild(document.createElement("br"));
@@ -126,17 +126,51 @@
 
             }
             
+            function isItOkay()
+            {
+                if(document.getElementById("newgame").innerHTML === "Start" && document.getElementById("gamename").value !== "")
+                {
+                    document.getElementById("newgame").style.backgroundColor = "green";       
+                    document.getElementById("newgame").style.color = "white"; 
+                }
+                else
+                {
+                    document.getElementById("newgame").style.backgroundColor = "red";       
+                    document.getElementById("newgame").style.color = "white";       
+
+                }
+            }
+            
+            function isItNo()
+            {
+                document.getElementById("newgame").style.backgroundColor = "white"; 
+                document.getElementById("newgame").style.color = "black"; 
+
+            }
+            
             function test()
             {
                 console.log("test");  
+            }
+            
+            function blueBoy()
+            {
+                document.getElementById("info").style.backgroundColor = "blue";       
+                document.getElementById("info").style.color = "white"; 
+            }
+            
+            function blueGal()
+            {
+                document.getElementById("info").style.backgroundColor = "white";       
+                document.getElementById("info").style.color = "black"; 
             }
             
 
         </script>
         
         <style>
-            input[type='text'] { font-size: 20px; }
-            input[type='password'] { font-size: 20px; }
+            input[type='text'] { font-size: 30px; }
+            input[type='password'] { font-size: 30px; }
         </style>
 
     </head>
@@ -147,9 +181,9 @@
 
             <h1 style=" background-color:#666666;">
 
-                <div style="text-align:center; font-size:400%;">
+                <div style="text-align:center; font-size:300%;">
 
-                    <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
+                    <a href="index.html" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
                         memes against humanity
                     </a>
 
@@ -159,17 +193,21 @@
             </h1>
 
             <div style="font-size:100%; text-align:center; top:50%; padding-top: 12.5%">
-                <button id="newgame" class = "button buttonRed" onclick="selectNew(event)">
+                <button id="newgame" class = "button buttonRed" onmouseover="isItOkay();" onmouseout="isItNo();" onclick="selectNew(event)">
                     New Game
                 </button>
-            
             </div>
             
             <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
                 <button id ="browse" class = "button buttonRed">
                     Browse Games
-                </button>
+                </button>   
+            </div>
             
+            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
+                <button id ="info" class = "button buttonRed" onmouseover="blueBoy();" onmouseout="blueGal();">
+                    Info
+                </button>   
             </div>
 
         </div>
@@ -202,7 +240,7 @@
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                font-size: 20px;
+                font-size: 30px;
                 margin: 4px 2px;
                 -webkit-transition-duration: 0.4s; /* Safari */
                 transition-duration: 0.4s;
