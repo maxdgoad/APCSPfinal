@@ -22,7 +22,8 @@
             {
                 if (/Android|webOS|Mobile|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent))
                 {
-                    location.href = 'mobile.html';
+                   // location.href = 'mobile.html';
+                    console.log("mobile");
                 }
 
             }
@@ -42,7 +43,7 @@
                 var name = document.createElement("input");
                 name.id = "gamename";
                 name.type = "text";
-                name.style = "width: 10%; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                name.style = "width: 150px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
                 name.defaultValue = "";
                 
                 var box = document.createElement("select");
@@ -58,7 +59,7 @@
                     box.appendChild(temp);
                         
                 }
-                box.style = "width:2%; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 20px"
+                box.style = "width:40px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 20px"
                 
                 div.style = "text-align: center"
                 
@@ -67,7 +68,7 @@
                 var password = document.createElement("input");
                 password.id = "pw";
                 password.type = "password";
-                password.style = "width: 10%; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+                password.style = "width: 150px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
                 
                 var words = document.createElement("div");
                 var optional = document.createElement("div");
@@ -77,7 +78,7 @@
                 words.appendChild(name);
                 words.style = "text-align:center;color: black"
                 
-                optional.innerHTML = "Game Password(optional): ";
+                optional.innerHTML = "Game Password (optional): ";
                 optional.appendChild(document.createElement("br"));
                 optional.appendChild(password);
                 optional.style = "text-align: center; color: black"
@@ -146,7 +147,7 @@
 
             <h1 style=" background-color:#666666;">
 
-                <div style="text-align:center; font-size:400%">
+                <div style="text-align:center; font-size:400%;">
 
                     <a href="http://www.memesagainsthumanity.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
                         memes against humanity

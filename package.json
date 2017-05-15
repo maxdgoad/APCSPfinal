@@ -19,9 +19,9 @@
     "url": "https://github.com/maxdgoad/APCSPfinal/issues"
   },
   "homepage": "https://github.com/maxdgoad/APCSPfinal#readme",
-  "devDependencies": {
-    "express": "^3.21.2",
+  "dependencies": {
+    "express": "^4.15.2",
     "querystring": "^0.2.0",
-    "socket.io": "0.9"
-  },
+    "socket.io": "^2.0.1"
+  }
 }
