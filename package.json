@@ -2,7 +2,7 @@
   "name": "apcspfinal",
   "version": "1.0.0",
   "description": "Max and Richie final project",
-  "main": "start.js",
+  "main": "memeGame.js",
   "scripts": {
     "test": ""
   },
