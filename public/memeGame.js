@@ -1,20 +1,18 @@
 class Game
 {
-    var max_players;
-    var password;
-    var name;
-    var player_count;
-    var players;
-    var rounds;
-    var king;
-    var last_king;
+  
     
     constructor(name, password, max_players)
     {
-        this.name = name;
-        this.password = password;
-        this.max_players = max_players;
-        this.king = 0;
+        var max_players = max_players;
+        var password = password;
+        var name = name;
+        var player_count;
+        var players;
+        var rounds;
+        var king = 0;
+        var last_king;
+    
     }
     
     get king()
@@ -33,6 +31,11 @@ class Game
     get name()
     {
         return this.name;
+    }
+    
+    set name(name)
+    {
+        this.name = name;
     }
     
     get password()
@@ -69,16 +72,19 @@ class Game
 
 class Player
 {
-    var name;
-    var cards;
-    var wins;
-    var rounds;
-    var king;
+    
     
     construtor(name)
     {
         this.name = name;
         this.king = false;
+        
+        var name;
+        var cards;
+        var wins;
+        var rounds;
+        var king;
+        
     }
     
     get wins()

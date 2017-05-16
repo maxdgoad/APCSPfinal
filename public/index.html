@@ -7,9 +7,8 @@
          Memes Against Humanity
         </title> 
         
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <script language="javascript" type="text/javascript" src="Game.js"></script>
-        <script language="javascript" type="text/javascript" src="Player.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="memeGame.js"></script>
         
         <script>
 
@@ -121,6 +120,8 @@
                     
                     created = true;
                     console.log('okay bud');
+                    
+                    changeView();
                      
                 }
 
@@ -165,6 +166,13 @@
                 document.getElementById("info").style.color = "black"; 
             }
             
+            function changeView()
+            {
+                //maybe have a confirmation bool here
+                document.getElementById("bod").style.display = "none";
+                
+            }
+            
 
         </script>
         
@@ -175,7 +183,7 @@
 
     </head>
     
-    <body  style="background-color: #ffffff; font-family: arial; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
+    <body  id="bod" style="background-color: #ffffff; font-family: arial; font-weight:bold; color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
         
         <div style="text-align:left;">
 
