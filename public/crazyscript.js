@@ -1,4 +1,5 @@
 
+
 var div;
 
 function bye()
@@ -182,7 +183,7 @@ function changeView()
 {
     //maybe have a confirmation bool here
     document.getElementById("original").style.display = "none";
-    
+    location.href = "#game=" + document.getElementById("gamename").value; 
 }
 
 read = false;
