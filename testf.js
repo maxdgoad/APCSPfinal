@@ -10,7 +10,7 @@ app.get('/', function(req, res) {
 app.use('/', express.static('F:\\APCSPfinal', {extensions: ['html', 'htm']
 }));
 
-app.use('/public', express.static('F:\\tychae\\public\\'))
+app.use('/public', express.static('F:\\APCSPfinal\\public\\'))
 
 app.listen(80, function () {
   console.log('listening on port 80')
