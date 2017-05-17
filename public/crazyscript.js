@@ -1,6 +1,12 @@
 
 
 var div;
+var already = false;
+var created = false;
+var game;
+
+var read = false;
+var crea = false;
 
 function bye()
 {
@@ -17,17 +23,23 @@ function bye()
         
     }
     
-    else if(getNickname() === "" || getGame() === "")
+    else if(getNickname() === "" && getGame() === "")
     {
         document.getElementById("init").style.display = "block";
+    }
+    
+    else if(getNickname() !== "" && getGame() === "")
+    {
+        document.getElementById("original").style.display = "block";
     }
 
 }
 
 function menu()
 {
-   
-    document.cookie = "game=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    already = false;
+    created = false;
+    document.cookie = "game=;";
     window.location.href = "#";
     document.getElementById("original").style.display = "block"; 
     document.getElementById("init").style.display = "none"; 
@@ -36,11 +48,12 @@ function menu()
 
 function buildGame()
 {
+    document.getElementById("original").style.display = "none";
+    window.location.href = "#game=" + document.getElementById("gamename").value;
+    document.cookie = " game=" + document.getElementById("gamename").value + ";";
+    
     window.location.href = "#game=" + getGame();
-    back = document.createElement("button");
-    back.innerHTML = "leave";
-    back.onclick = menu;
-    document.getElementById("KungFuKenny").appendChild(back);
+    
     document.getElementById("KungFuKenny").style.display = "block";
 }
 
@@ -111,16 +124,15 @@ function selectNew()
 
     event.preventDefault();
     document.getElementById("newgame").onclick = creategame;
+    
+    already = false;
+    created = false;
 
 
 }
 
-var already = false;
-var created = false;
-
 function creategame()
 {
-
     if(document.getElementById("gamename").value === "" && !already)
     {
         var nDiv = document.createElement("div");
@@ -130,16 +142,17 @@ function creategame()
         div.appendChild(document.body.appendChild(document.createElement("br")));
         div.appendChild(nDiv); 
         already = true;
+        console.log("i dont know");
 
     }
 
     else if(document.getElementById("gamename").value !== "" && !created)
     {
-        var game = new Game(document.getElementById("gamename").value, document.getElementById("pw").value, document.getElementById("box").options[document.getElementById("box").selectedIndex].value);
+        game = new Game(document.getElementById("gamename").value, document.getElementById("pw").value, document.getElementById("box").options[document.getElementById("box").selectedIndex].value);
 
         created = true;
-
-        changeView();
+        
+        buildGame();
 
     }
 
@@ -205,17 +218,6 @@ function blueGal()
     document.getElementById("info").style.color = "black"; 
 }
 
-function changeView()
-{
-    //maybe have a confirmation bool here
-    document.getElementById("original").style.display = "none";
-    window.location.href = "#game=" + document.getElementById("gamename").value;
-    document.cookie = " game=" + document.getElementById("gamename").value + ";";
-    buildGame();
-}
-
-read = false;
-crea = false;
 
 function getReal()
 {
