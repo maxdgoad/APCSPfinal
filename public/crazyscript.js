@@ -10,12 +10,38 @@ function bye()
         console.log("mobile");
     }
     document.getElementById("nick").value = getNickname();
+    
+    if(getGame() !== "")
+    {
+        buildGame();
+        
+    }
+    
+    else if(getNickname() === "" || getGame() === "")
+    {
+        document.getElementById("init").style.display = "block";
+    }
 
 }
 
-function rejoinGame()
+function menu()
 {
-    //will use cookies to rejoin game
+   
+    document.cookie = "game=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    window.location.href = "#";
+    document.getElementById("original").style.display = "block"; 
+    document.getElementById("init").style.display = "none"; 
+    document.getElementById("KungFuKenny").style.display = "none";
+}
+
+function buildGame()
+{
+    window.location.href = "#game=" + getGame();
+    back = document.createElement("button");
+    back.innerHTML = "leave";
+    back.onclick = menu;
+    document.getElementById("KungFuKenny").appendChild(back);
+    document.getElementById("KungFuKenny").style.display = "block";
 }
 
 function selectNew()
@@ -183,11 +209,14 @@ function changeView()
 {
     //maybe have a confirmation bool here
     document.getElementById("original").style.display = "none";
-    location.href = "#game=" + document.getElementById("gamename").value; 
+    window.location.href = "#game=" + document.getElementById("gamename").value;
+    document.cookie = " game=" + document.getElementById("gamename").value + ";";
+    buildGame();
 }
 
 read = false;
 crea = false;
+
 function getReal()
 {
     if(document.getElementById("nick").value === "" && !read)
@@ -214,6 +243,27 @@ function getNickname()
 {
     //https://www.w3schools.com/js/js_cookies.asp
     var name = "nickname=";
+    var scook = document.cookie.split(';');
+    for( rep = 0; rep < scook.length; rep++) 
+    {
+        var poss = scook[rep];
+        while (poss.charAt(0) == ' ') 
+        {
+            poss = poss.substring(1);
+        }
+        if (poss.indexOf(name) == 0) 
+        {
+            return poss.substring(name.length, poss.length);
+        }
+    }
+    return "";
+
+}
+    
+function getGame()
+{
+    //https://www.w3schools.com/js/js_cookies.asp
+    var name = "game=";
     var scook = document.cookie.split(';');
     for( rep = 0; rep < scook.length; rep++) 
     {
