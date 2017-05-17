@@ -21,7 +21,7 @@
   "homepage": "https://github.com/maxdgoad/APCSPfinal#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "querystring": "^0.2.0",
+    "query-string": "^4.3.4",
     "socket.io": "^2.0.1"
   }
 }
