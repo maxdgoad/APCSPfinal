@@ -236,8 +236,15 @@ function getReal()
     {
         document.cookie = "nickname=" + document.getElementById("nick").value + "; expires= 13 Jul 2017 12:00:00 UTC; path=/;";
         crea = true;
-        document.getElementById("init").style.display = "none";    
-        document.getElementById("original").style.display = "block";
+        
+        if(getGame() !== "")
+        {
+            buildGame();  
+        }
+        else
+        {
+            menu();
+        }
     }
 }
 
