@@ -45,16 +45,13 @@ function menu()
     
     document.getElementById("newgame").style = "transform: translateY(0px); position:relative ";
     document.getElementById("newgame").innerHTML = "New Game";
-    
-    document.getElementById("values").style.display = "none";
-    document.getElementById("words").style.display = "none";
-    document.getElementById("optional").style.display = "none";
-    
+
     document.getElementById("original").style.display = "inline"; 
+    document.getElementById("crap").style.display = "none";
+    
     document.getElementById("browse").style.display = "inline";
     document.getElementById("info").style.display = "inline";
-
-    
+ 
     document.getElementById("init").style.display = "none"; 
     document.getElementById("KungFuKenny").style.display = "none";
     
@@ -77,6 +74,7 @@ function buildGame()
 
 function selectNew()
 {
+    
 
     document.getElementById("browse").style = "display:none;";
     document.getElementById("info").style = "display:none;";
@@ -132,15 +130,21 @@ function selectNew()
     optional.appendChild(password);
     optional.style = "text-align: center; color: black; font-size:30px"
     
+    crap = document.createElement("div");
+    crap.id = "crap";
+    crap.style.display = "inline";
+    
+    document.getElementById("original").appendChild(crap);
 
-    document.getElementById("original").appendChild(document.createElement("br"));
-    document.getElementById("original").appendChild(document.createElement("br"));
-    document.getElementById("original").appendChild(document.createElement("br"));
-    document.getElementById("original").appendChild(words);
-    document.getElementById("original").appendChild(document.createElement("br"));
-    document.getElementById("original").appendChild(optional);
-    document.getElementById("original").appendChild(document.createElement("br"));
-    document.getElementById("original").appendChild(div);
+    document.getElementById("crap").appendChild(document.createElement("br"));
+    document.getElementById("crap").appendChild(document.createElement("br"));
+    document.getElementById("crap").appendChild(document.createElement("br"));
+    document.getElementById("crap").appendChild(words);
+    document.getElementById("crap").appendChild(document.createElement("br"));
+    document.getElementById("crap").appendChild(optional);
+    document.getElementById("crap").appendChild(document.createElement("br"));
+    document.getElementById("crap").appendChild(div);
+    
 
     event.preventDefault();
     document.getElementById("newgame").onclick = creategame;
@@ -235,6 +239,18 @@ function blueGal()
 {
     document.getElementById("info").style.backgroundColor = "white";       
     document.getElementById("info").style.color = "black"; 
+}
+
+function isItB()
+{
+    document.getElementById("browse").style.backgroundColor = "orange";       
+    document.getElementById("browse").style.color = "white"; 
+}
+
+function isItNoB()
+{
+    document.getElementById("browse").style.backgroundColor = "white";       
+    document.getElementById("browse").style.color = "black"; 
 }
 
 
