@@ -15,9 +15,10 @@ function bye()
        // location.href = 'mobile.html';
         console.log("mobile");
     }
+    
     document.getElementById("nick").value = getNickname();
     
-    if(getGame() !== "")
+    if(getGame() !== "" && getNickname() !== "")
     {
         buildGame();
         
@@ -41,16 +42,33 @@ function menu()
     created = false;
     document.cookie = "game=;";
     window.location.href = "#";
-    document.getElementById("original").style.display = "block"; 
+    
+    document.getElementById("newgame").style = "transform: translateY(0px); position:relative ";
+    document.getElementById("newgame").innerHTML = "New Game";
+    
+    document.getElementById("values").style.display = "none";
+    document.getElementById("words").style.display = "none";
+    document.getElementById("optional").style.display = "none";
+    
+    document.getElementById("original").style.display = "inline"; 
+    document.getElementById("browse").style.display = "inline";
+    document.getElementById("info").style.display = "inline";
+
+    
     document.getElementById("init").style.display = "none"; 
     document.getElementById("KungFuKenny").style.display = "none";
+    
+    document.getElementById("newgame").onclick = selectNew;
 }
 
 function buildGame()
 {
     document.getElementById("original").style.display = "none";
-    window.location.href = "#game=" + document.getElementById("gamename").value;
-    document.cookie = " game=" + document.getElementById("gamename").value + ";";
+    
+    if(getGame() === "")
+    {
+        document.cookie = " game=" + document.getElementById("gamename").value + ";";
+    }
     
     window.location.href = "#game=" + getGame();
     
@@ -67,8 +85,6 @@ function selectNew()
     document.getElementById("newgame").style = "transform: translateY(50px); position:relative ";
     document.getElementById("newgame").innerHTML = "Start"
 
-    div = document.createElement("div");
-
     var name = document.createElement("input");
     name.id = "gamename";
     name.type = "text";
@@ -77,7 +93,8 @@ function selectNew()
 
     var box = document.createElement("select");
     box.id = "box";
-
+    box.style = "width:70px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 30px"
+    
     var temp;
     for(rep = 4; rep<=8; rep++)
     {
@@ -88,10 +105,11 @@ function selectNew()
         box.appendChild(temp);
 
     }
-    box.style = "width:70px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 30px"
 
+    div = document.createElement("div");
+    div.id = "values";
     div.style = "text-align: center"
-
+    
     div.appendChild(box);
 
     var password = document.createElement("input");
@@ -101,12 +119,14 @@ function selectNew()
 
     var words = document.createElement("div");
     var optional = document.createElement("div");
-
+    
+    words.id = "words";
     words.innerHTML = "Game Name: ";
     words.appendChild(document.createElement("br"));
     words.appendChild(name);
     words.style = "text-align:center;color: black; font-size:30px;"
 
+    optional.id = "optional";
     optional.innerHTML = "Game Password (optional): ";
     optional.appendChild(document.createElement("br"));
     optional.appendChild(password);
@@ -142,7 +162,6 @@ function creategame()
         div.appendChild(document.body.appendChild(document.createElement("br")));
         div.appendChild(nDiv); 
         already = true;
-        console.log("i dont know");
 
     }
 
