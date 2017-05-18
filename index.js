@@ -9,11 +9,8 @@ var path = require('path');
 var app = express();
 
 // Create a simple Express application
-
-    // Turn down the logging activity
-    //Dont really know how this works just read online to do this way to obtain less met data about user
-    // Serve static html, js, css, and image files from the public 
-    app.use(express.static(path.join(__dirname,'public')));
+// Serve static html, js, css, and image files from the public 
+app.use(express.static(path.join(__dirname,'public')));
 
 // Create a Node.js based http server on port 6969
 var server = require('http').createServer(app).listen(6969);
