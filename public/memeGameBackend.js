@@ -5,21 +5,19 @@ var gameSocket;
 //sio The Socket.IO library
 //socket The socket object for the connected client.
  
-exports.createGame = function(sio, socket){
+var creategamex = function(sio, socket){
     io = sio;
     gameSocket = socket;
     gameSocket.emit('connected', { message: "You are connected!" });
     console.log("connected")
 
     // Host Events
-    gameSocket.on('hostNewGame', hostNewGame);
-    gameSocket.on('hostRoomFull', hostStartGame);
-    gameSocket.on('hostNextRound', hostNextRound);
+    gameSocket.on('hostCreateNewGame', hostCreateNewGame);
+    gameSocket.on('startGame', startGame);
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
     gameSocket.on('playerAnswer', playerAnswer);
-    gameSocket.on('playerRestart', playerRestart);
 
 }
 
