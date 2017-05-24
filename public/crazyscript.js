@@ -271,6 +271,7 @@ function getReal()
     {
         document.cookie = "nickname=" + document.getElementById("nick").value + "; expires= 13 Jul 2017 12:00:00 UTC; path=/;";
         crea = true;
+         socket.emit('new player', document.getElementById("nick").value);
         
         if(getGame() !== "")
         {

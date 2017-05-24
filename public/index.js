@@ -12,10 +12,14 @@ app.get('/', function(req, res){
 app.use(express.static(path.join(__dirname, '/')));
 
 io.on('connection', function(socket){
-    mgb.creategamex(io,socket);
-  //console.log('a user connected');
+    socket.on('new player', function(msg){
+    console.log('message: ' + msg);
+  });
+    mgb.creategamex(io, socket);
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
 });
-    
 
 http.listen(6969, function(){
   console.log('port 6969');

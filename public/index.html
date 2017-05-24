@@ -9,12 +9,11 @@
         
         <script language="javascript" type="text/javascript" src="Game.js"></script>
         <script language="javascript" type="text/javascript" src="crazyscript.js"></script>
-        <script language="javascript" type="text/javascript" src="memeGameBackend.js"></script>
         <script language="javascript" type="text/javascript" src="memeGame.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 
         <script>
-            var socket = io();
+            var socket = io.connect('http://localhost:6969');
         </script>
 
     </head>
