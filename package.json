@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/maxdgoad/APCSPfinal#readme",
   "dependencies": {
-    "express": "^4.15.3",
+    "express": "^3.x",
     "query-string": "^4.3.4",
-    "socket.io": "^2.0.1"
+    "socket.io": "^0.9"
   }
 }
