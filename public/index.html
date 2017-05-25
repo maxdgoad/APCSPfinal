@@ -20,17 +20,18 @@
     
     <body  id="bod" style="background-color: #ffffff; font-family: arial;  color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
 
-            <h1 style=" background-color:#666666;">
+        <h1 style=" background-color:#666666;">
 
-                <div style="text-align:center; font-size:300%;">
+            <div style="text-align:center; font-size:300%;">
 
-                    <a href="http://tychae.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
-                        test test test
-                    </a>
+                <a href="http://tychae.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
+                    test test test
+                </a>
 
-                </div>
+            </div>
 
-            </h1>
+        </h1>
+        
         <div id="init" style="text-align:center; top:50%; padding-top: 12.5%; color:black; font-size:30px; display:none">
             Nickname
             <br/>
@@ -40,22 +41,28 @@
             <button id="gogo" class="button buttonGo" onmouseover="isItGo();" onmouseout="isItNoGo();" onclick="getReal();">Go</button>
         </div>
         
+        <div style="text-align:left;">
+            <button id="back" style = "display:none" class = "back" onmouseover="changeColOn();" onmouseout="changeColOff();" onclick="getBackToNick();">
+                < Change name
+            </button>
+        </div>
         
         <div id="original" style="display:none">
             
-            <div style="font-size:100%; text-align:center; top:50%; padding-top: 12.5%">
+            
+            <div style="text-align:center;padding-top: 12.5%">
                 <button id="newgame" class = "button buttonRed" onmouseover="isItOkay();" onmouseout="isItNo();" onclick="selectNew()">
-                    New Game
+                    New game
                 </button>
             </div>
             
-            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
+            <div style="font-size: 100%; text-align:center; position: relative;">
                 <button id ="browse" class = "button buttonRed" onmouseover="isItB();" onmouseout="isItNoB();">
-                    Browse Games
+                    Browse games
                 </button>   
             </div>
             
-            <div style="font-size: 100%; text-align:center; position: relative; top: 50%;">
+            <div style="font-size: 100%; text-align:center; position: relative;">
                 <button id ="info" class = "button buttonRed" onmouseover="blueBoy();" onmouseout="blueGal();">
                     Info
                 </button>   
@@ -64,7 +71,6 @@
         </div>
         
         <div id="KungFuKenny" style="display:none">
-            <button onclick="menu();" id="leave">Leave</button>
         </div>
 
         <style>
@@ -113,7 +119,14 @@
                 
             }
 
-            
+            .back
+            {
+               font-size: 20px; 
+                background-color: white; 
+                color: black; 
+                border: 4px solid #000000;
+                 position: relative;
+            }
             
             
             .buttonRed

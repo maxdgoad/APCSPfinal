@@ -42,9 +42,16 @@ function bye()
     
     else if(getNickname() !== "" && getGame() === "")
     {
-        document.getElementById("original").style.display = "inline";
+        menu();
     }
 
+}
+
+function getBackToNick()
+{
+    document.getElementById("init").style.display = "inline";
+    document.getElementById("original").style.display = "none";
+    document.getElementById("back").style.display = "none";
 }
 
 function menu()
@@ -53,6 +60,9 @@ function menu()
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
     
+    document.getElementById("back").style.display = "inline";
+    document.getElementById("back").innerHTML = "< Change name";
+    document.getElementById("back").onclick = getBackToNick;
     
     document.getElementById("init").style.display = "none";
     already = false;
@@ -92,7 +102,9 @@ function buildGame()
     //changes query string, and cookie
     //will be used for players joining from server browser
     document.getElementById("original").style.display = "none";
-    
+    document.getElementById("back").style.display = "inline";
+    document.getElementById("back").innerHTML = "< Leave";
+    document.getElementById("back").onclick = menu;
     if(getGame() === "")
     {
         document.cookie = " game=" + document.getElementById("gamename").value + ";";
@@ -100,7 +112,6 @@ function buildGame()
     
     window.location.href = "#game=" + getGame();
     
-    document.getElementById("KungFuKenny").style.display = "block";
 }
 
 function createGame()
@@ -158,11 +169,13 @@ function getReal()
         if(getGame() !== "")
         {
             document.getElementById("init").style.display = "none";
-            buildGame();  
+            buildGame();
+            crea = false;
         }
         
         else
         {
+            crea = false;
             menu();
         }
     }
@@ -172,7 +185,10 @@ function selectNew()
 {
     //rating: bad news bears
     //this monster changes from menu to the game create screen, pretty much garbage
-
+    
+    document.getElementById("back").innerHTML = "< Back";
+    document.getElementById("back").onclick = menu;
+    
     document.getElementById("browse").style = "display:none;";
     document.getElementById("info").style = "display:none;";
 
@@ -366,3 +382,16 @@ function isItNoB()
     document.getElementById("browse").style.backgroundColor = "white";       
     document.getElementById("browse").style.color = "black"; 
 }
+
+function changeColOn()
+{
+    document.getElementById("back").style.backgroundColor = "green";       
+    document.getElementById("back").style.color = "white"; 
+}
+
+function changeColOff()
+{
+    document.getElementById("back").style.backgroundColor = "white";       
+    document.getElementById("back").style.color = "black"; 
+}
+
