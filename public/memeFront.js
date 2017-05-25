@@ -1,6 +1,13 @@
 //I am taking things from crazyscript.js and cleaning/commenting them into here. Also may start adding emits as I go
 //Here a we go
 
+//you know what it is boy
+
+
+
+
+            
+
 var div
 var loaded = false;
 var already = false;
@@ -12,6 +19,8 @@ var crea = false;
 
 function bye()
 {
+    
+    memeGame();
     //rating: pretty solid
     
     //bye runs on the html body load
@@ -44,8 +53,11 @@ function bye()
     {
         menu();
     }
+    
 
 }
+
+
 
 function getBackToNick()
 {
@@ -134,9 +146,10 @@ function createGame()
 
     else if(document.getElementById("gamename").value !== "" && !created)
     {
-        game = new Game(document.getElementById("gamename").value, document.getElementById("pw").value, document.getElementById("box").options[document.getElementById("box").selectedIndex].value);
 
         created = true;
+        
+        socket.emit('hostCreateNewGame', {gameId: "cmon", password: "dont", players: "do this"});
         
         buildGame();
 

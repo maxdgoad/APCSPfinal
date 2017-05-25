@@ -1,5 +1,8 @@
 var io;
 var gameSocket;
+var gamelist = new Array();
+const Game = require('./Game.js');
+var sup;
 
 // This function is called by index.js to initialize a new game instance.
 //sio The Socket.IO library
@@ -18,20 +21,23 @@ exports.creategamex = function(sio, socket){
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
     gameSocket.on('playerAnswer', playerAnswer);
+    
 
 }
 
 //host functions
 
-function hostCreateNewGame(gameId) {
+function hostCreateNewGame(gameId, password, players) {
     // Create a unique Socket.IO Room
-    var thisGameId = gameId;
-
+    sup = new Game(gameId, password, players);
+    gamelist.push(sup);
+    console.log("newgame: " + gameId + " " + players + " " + password)
     // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
-    this.emit('newGameCreated', {gameId: thisGameId, mySocketId: this.id});
-
-    // Join the Room and wait for the players(dont 100% know how this works)
-    this.join(thisGameId.toString());
+    
+    //this.emit('newGameCreated', {gameId: thisGameId, mySocketId: this.id});
+    //not sure if we need this rn -max
+    
+    
 }
 
 function startGame(gameId){
