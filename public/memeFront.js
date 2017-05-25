@@ -394,4 +394,3 @@ function changeColOff()
     document.getElementById("back").style.backgroundColor = "white";       
     document.getElementById("back").style.color = "black"; 
 }
-
