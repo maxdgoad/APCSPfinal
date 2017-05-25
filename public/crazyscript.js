@@ -1,5 +1,5 @@
 
-
+//Sorry Richie, there are no comments as of now, and the variable and function names are really terrible and ambiguous
 var div;
 var already = false;
 var created = false;
@@ -18,16 +18,17 @@ function bye()
     
     document.getElementById("nick").value = getNickname();
     
-    if(getGame() !== "" && getNickname() !== "")
+    if(getNickname() !== "" && getGame() !== "")
     {
         buildGame();
         
     }
     
-    else if(getNickname() === "" && getGame() === "")
+    else if((getNickname() === "" && getGame() === "") || (getNickname() === "" && getGame() !== ""))
     {
         document.getElementById("init").style.display = "block";
     }
+    
     
     else if(getNickname() !== "" && getGame() === "")
     {
@@ -38,6 +39,7 @@ function bye()
 
 function menu()
 {
+    document.getElementById("init").style.display = "none";
     already = false;
     created = false;
     document.cookie = "game=;";
@@ -47,7 +49,11 @@ function menu()
     document.getElementById("newgame").innerHTML = "New Game";
 
     document.getElementById("original").style.display = "inline"; 
-    document.getElementById("crap").style.display = "none";
+    
+    if(document.getElementById("crap") !== null)
+    {
+        document.getElementById("crap").style.display = "none";
+    }
     
     document.getElementById("browse").style.display = "inline";
     document.getElementById("info").style.display = "inline";
@@ -275,6 +281,7 @@ function getReal()
         
         if(getGame() !== "")
         {
+            document.getElementById("init").style.display = "none";
             buildGame();  
         }
         else

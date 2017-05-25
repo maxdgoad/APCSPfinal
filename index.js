@@ -6,10 +6,12 @@ var express = require('express');
 var mgb = require( path.resolve( __dirname, "./memeGameBackend" ) );
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
+app.use(express.static(path.join(__dirname, '/public/')));
 app.use(express.static(path.join(__dirname, '/')));
+
 
 io.on('connection', function(socket){
     socket.on('new player', function(msg){
