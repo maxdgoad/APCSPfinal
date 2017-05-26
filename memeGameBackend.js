@@ -1,14 +1,15 @@
 var io;
 var gameSocket;
 var gamelist = new Array();
-const Game = require('./Game.js');
+const Game = require('./Game');
 var sup;
 
 // This function is called by index.js to initialize a new game instance.
 //sio The Socket.IO library
 //socket The socket object for the connected client.
  
-exports.creategamex = function(sio, socket){
+exports.createGame = function(sio, socket)
+{
     io = sio;
     gameSocket = socket;
     gameSocket.emit('connected', { message: "You are connected!" });
@@ -27,7 +28,8 @@ exports.creategamex = function(sio, socket){
 
 //host functions
 
-function hostCreateNewGame(gameId, password, players) {
+function hostCreateNewGame(gameId, password, players) 
+{
     // Create a unique Socket.IO Room
     sup = new Game(gameId, password, players);
     gamelist.push(sup);
@@ -50,7 +52,8 @@ function startGame(gameId){
 
 //player functions
 
-function playerJoinGame(data){
+function playerJoinGame(data)
+{
 	// A reference to the player's Socket.IO socket object
     var sock = this;
      // Look up the room ID in the Socket.IO manager object
@@ -70,7 +73,8 @@ function playerJoinGame(data){
     }
 }
 
-function playerAnswer(data) {
+function playerAnswer(data) 
+{
     // The player's answer is attached to the data object
     // Emit an event with the answer so it can be checked by the 'Host'
     //must have a host check answer in memeGame.js

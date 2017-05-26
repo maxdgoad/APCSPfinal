@@ -16,6 +16,8 @@ app.get('/', function (req, res) {
 app.use(express.static(path.join(__dirname, '/public/')));
 // Import the memeGameBackend game file.
 var mgb = require('./memeGameBackend');
+var game = require('./Game');
+
 
 // Listen for Socket.IO Connections. Once connected, start the game logic.
 io.sockets.on('connection', function (socket) {
