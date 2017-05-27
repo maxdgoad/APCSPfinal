@@ -3,11 +3,6 @@
 
 //you know what it is boy
 
-
-
-
-            
-
 var div
 var loaded = false;
 var already = false;
@@ -16,6 +11,8 @@ var game;
 
 var read = false;
 var crea = false;
+
+var socket = io();
 
 function bye()
 {
@@ -82,7 +79,12 @@ function menu()
     document.cookie = "game=;";
     window.location.href = "#";
     
-   document.getElementById("newgame").style = "transform: translateY(0px); position:relative";
+    document.getElementById("newgame").style = "transform: translateY(0px); position:relative";
+    document.getElementById("browse").style = "transform: translateY(0px); position:relative";
+    document.getElementById("info").style = "transform: translateY(0px); position:relative";
+
+
+    document.getElementById("browse").innerHTML = "Browse Games";
     document.getElementById("newgame").innerHTML = "New Game";
 
     document.getElementById("original").style.display = "inline"; 
@@ -90,7 +92,11 @@ function menu()
     if(document.getElementById("crap") !== null)
     {
         document.getElementById("original").removeChild(document.getElementById("crap"));
-        console.log('jesus');
+    }
+    
+    if(document.getElementById("serve") !== null)
+    {
+        document.getElementById("original").removeChild(document.getElementById("serve"));
     }
     
     document.getElementById("browse").style.display = "inline";
@@ -148,8 +154,8 @@ function createGame()
     {
 
         created = true;
-        
-        socket.emit('hostCreateNewGame', {gameId: "cmon", password: "dont", players: "do this"});
+
+        socket.emit('hostCreateNewGame', document.getElementById("gamename").value, document.getElementById("box").value, document.getElementById("pw").value);
         
         buildGame();
 
@@ -177,7 +183,6 @@ function getReal()
     {
         document.cookie = "nickname=" + document.getElementById("nick").value + "; expires= 13 Jul 2017 12:00:00 UTC; path=/;";
         crea = true;
-         socket.emit('new player', document.getElementById("nick").value);
         
         if(getGame() !== "")
         {
@@ -194,6 +199,48 @@ function getReal()
     }
 }
 
+function gamebrowser()
+{
+    //rating: bad news bears
+    //this monster changes from menu to the game create screen, pretty much garbage
+    
+    document.getElementById("back").innerHTML = "< Back";
+    document.getElementById("back").onclick = menu;
+    
+    document.getElementById("newgame").style = "display:none; position:absolute;";
+    document.getElementById("info").style = "display:none; position:absolute;";
+
+
+    document.getElementById("browse").style = "transform: translateY(-100px); position:relative;";
+
+    document.getElementById("browse").innerHTML = "join"
+    
+    list = document.createElement("div");
+    list.id = "serve";
+    list.style = "width: 50%; padding:1%; border: 4px solid #000000; margin:auto; color:black; text-align: center; position:absolute; overflow:scroll; height:400px; padding-bottom: -400px; left:24%; background: rgba(255,255,255,.75); transform: translateY(-70px);"
+    
+    socket.emit('getGames', socket.id);
+    document.getElementById("original").appendChild(list);
+
+    
+
+}
+
+//this line will fill the games list with parse and formatted games 
+//need to add amount of current players to display
+socket.on('returnGames', function(games){
+    for(rep = 0; rep<games.length; rep++)
+    {
+        console.log(games[rep].gameId + " " + games[rep].playernum + " " + games[rep].password);
+        tab = document.createElement("button");
+        tab.innerHTML = games[rep].gameId + " " + games[rep].playerlist.length + "/" + games[rep].playernum;
+        tab.style = "padding: 16px 32px; text-align: left; text-decoration: none; display: inline-block; font-size: 30px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer; width:95%;";
+        document.getElementById("serve").appendChild(tab);
+        
+    }
+    
+});
+
 function selectNew()
 {
     //rating: bad news bears
@@ -202,22 +249,23 @@ function selectNew()
     document.getElementById("back").innerHTML = "< Back";
     document.getElementById("back").onclick = menu;
     
-    document.getElementById("browse").style = "display:none;";
-    document.getElementById("info").style = "display:none;";
+    document.getElementById("browse").style = "display:none;position:absolute;";
+    document.getElementById("info").style = "display:none;position:absolute;";
+    
 
-
-    document.getElementById("newgame").style = "transform: translateY(50px); position:relative ";
+    //document.getElementById("original").style = "transform: translateY(-100px); position:relative"
+    document.getElementById("newgame").style = "transform: translateY(50px); position:relative";
     document.getElementById("newgame").innerHTML = "Start"
 
     var name = document.createElement("input");
     name.id = "gamename";
     name.type = "text";
-    name.style = "width: 280px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+    name.style = "width: 280px; margin: 0 auto; text-align:left; border: 2px solid #000000;";
     name.defaultValue = "";
 
     var box = document.createElement("select");
     box.id = "box";
-    box.style = "width:70px; margin: 0 auto; text-align: center; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 30px"
+    box.style = "width:70px; margin: 0 auto; text-align: left; background-color: #ffffff; border: 2px solid #000000; color: black;  position:relative; font-size: 30px"
     
     var temp;
     for(rep = 4; rep<=8; rep++)
@@ -239,7 +287,7 @@ function selectNew()
     var password = document.createElement("input");
     password.id = "pw";
     password.type = "password";
-    password.style = "width: 280px; margin: 0 auto; text-align:center; border: 2px solid #000000;";
+    password.style = "width: 280px; margin: 0 auto; text-align:left; border: 2px solid #000000;";
 
     var words = document.createElement("div");
     var optional = document.createElement("div");
@@ -248,18 +296,18 @@ function selectNew()
     words.innerHTML = "Game Name: ";
     words.appendChild(document.createElement("br"));
     words.appendChild(name);
-    words.style = "text-align:center;color: black; font-size:30px;"
+    words.style = "text-align:center;color: black; font-size:30px; color:white"
 
     optional.id = "optional";
     optional.innerHTML = "Game Password (optional): ";
     optional.appendChild(document.createElement("br"));
     optional.appendChild(password);
-    optional.style = "text-align: center; color: black; font-size:30px"
+    optional.style = "text-align: center; color: white; font-size:30px"
     crap = document.createElement("div");
     crap.id = "crap";
     crap.style.display = "inline";
     
-    document.getElementById("original").appendChild(crap);
+   // document.getElementById("original").appendChild(crap);
 
     crap.appendChild(document.createElement("br"));
     crap.appendChild(document.createElement("br"));

@@ -7,10 +7,10 @@ var server = require('http').Server(app);
 // Create a Socket.IO server and attach it to the http server
 var io = require('socket.io')(server);
 //a Node.js based http server on port 6969
-server.listen(6969);
+server.listen(6969, '0.0.0.0');
 
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.use(express.static(path.join(__dirname, '/public/')));
@@ -21,8 +21,8 @@ var game = require('./Game');
 
 // Listen for Socket.IO Connections. Once connected, start the game logic.
 io.sockets.on('connection', function (socket) {
-    console.log('client connected');
     mgb.createGame(io, socket);
+    
 });
 
 

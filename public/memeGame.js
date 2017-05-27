@@ -6,6 +6,7 @@ var sio = {
         console.log("okey")
         sio.socket = io.connect();
         sio.bindEvents();
+        sio.onConnected();
         },
 
     /**
@@ -23,7 +24,7 @@ var sio = {
         onConnected : function() {
              // Cache a copy of the client's socket.IO session ID on the memeGame.js
             memeGame.mySocketId = IO.socket.socket.sessionid;
-            console.log("connected")
+            console.log("connected2")
 
         },
 
@@ -41,6 +42,12 @@ var sio = {
             //maybe start a countdown or intialize points or something
 
         },
+    
+        hostCreateNewGame : function(data){
+            //maybe start a countdown or intialize points or something
+
+        },
+    
     }
 } 
 

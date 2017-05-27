@@ -7,47 +7,44 @@
          Test
         </title> 
         
-        <script language="javascript" type="text/javascript" src="memeFront.js"></script>
-        <script language="javascript" type="text/javascript" src="memeGame.js"></script>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
-        <script>
-            var socket = io.connect('http://localhost:6969');
-        </script>
-
+      <script language="javascript" type="text/javascript" src="memeFront.js"></script>
+      <script language="javascript" type="text/javascript" src="memeGame.js"></script>
        
 
     </head>
     
-    <body  id="bod" style="background-color: #ffffff; font-family: arial;  color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:-0px" onload="bye()">
+    <body  id="bod" style="background-image: url(assets/back.jpg); background-position:center; background-size: cover; font-family: arial;  color:white; height:100%; min-height: 100%;  margin-top: -15px; margin-right:8px" onload="bye()">
 
-        <h1 style=" background-color:#666666;">
+        <h1 style=" background-color: rgba(0, 0, 0, 0.75) ">
 
             <div style="text-align:center; font-size:300%;">
 
-                <a href="http://tychae.com" style="color:white; text-align:left; text-shadow: 4px 4px #222222; text-decoration:none;">
-                    test test test
+                <a href="localhost:6969" style="color:white; text-align:left; text-shadow:; text-decoration:none;">
+                    Card Game
                 </a>
 
             </div>
 
         </h1>
         
-        <div id="init" style="text-align:center; top:50%; padding-top: 12.5%; color:black; font-size:30px; display:none">
+        <div id="init" style="text-align:center; top:50%; padding-top: 12.5%; color:white; font-size:30px; display:none">
             Nickname
             <br/>
-            <input id="nick" type="text" style="width:300px;" 
+            <input id="nick" type="text" style="width:300px; border:4px solid black" 
             <br/>
             <br/>
             <button id="gogo" class="button buttonGo" onmouseover="isItGo();" onmouseout="isItNoGo();" onclick="getReal();">Go</button>
         </div>
         
         <div style="text-align:left;">
-            <button id="back" style = "display:none" class = "back" onmouseover="changeColOn();" onmouseout="changeColOff();" onclick="getBackToNick();">
+            <button id="back" style = "display:none; position:absolute" class = "back" onmouseover="changeColOn();" onmouseout="changeColOff();" onclick="getBackToNick();">
                 < Change name
             </button>
         </div>
         
-        <div id="original" style="display:none">
+        <div id="original" style="display:none;">
             
             <div style="text-align:center;padding-top: 12.5%">
                 <button id="newgame" class = "button buttonRed" onmouseover="isItOkay();" onmouseout="isItNo();" onclick="selectNew()">
@@ -56,7 +53,7 @@
             </div>
             
             <div style="font-size: 100%; text-align:center; position: relative;">
-                <button id ="browse" class = "button buttonRed" onmouseover="isItB();" onmouseout="isItNoB();">
+                <button id ="browse" class = "button buttonRed" onmouseover="isItB();" onmouseout="isItNoB();" onclick = "gamebrowser();">
                     Browse games
                 </button>   
             </div>
