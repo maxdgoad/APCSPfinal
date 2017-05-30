@@ -7,12 +7,21 @@ var div
 var loaded = false;
 var already = false;
 var created = false;
-var game;
+var game = null;
+var player = null;
 
 var read = false;
 var crea = false;
 
 var socket = io();
+
+socket.on('getGame', function(gameobj){
+    game = gameobj;
+});
+
+socket.on('getPlayer', function(playerobj){
+   player = playerobj; 
+});
 
 function bye()
 {
@@ -65,9 +74,18 @@ function getBackToNick()
 
 function menu()
 {
+    if(game !== null && player !== null)
+    {
+        socket.emit('playerLeave', game, player);
+        game = null;
+        player = null;
+    }
+    
     //rating: could be improved
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
+    
+    
     
     document.getElementById("back").style.display = "inline";
     document.getElementById("back").innerHTML = "< Change name";
@@ -155,7 +173,7 @@ function createGame()
 
         created = true;
 
-        socket.emit('hostCreateNewGame', document.getElementById("gamename").value, document.getElementById("box").value, document.getElementById("pw").value);
+        socket.emit('hostCreateNewGame', document.getElementById("gamename").value, document.getElementById("box").value, document.getElementById("pw").value, getNickname(), socket.id);
         
         buildGame();
 
@@ -183,6 +201,8 @@ function getReal()
     {
         document.cookie = "nickname=" + document.getElementById("nick").value + "; expires= 13 Jul 2017 12:00:00 UTC; path=/;";
         crea = true;
+        
+        
         
         if(getGame() !== "")
         {
@@ -229,11 +249,12 @@ function gamebrowser()
 //this line will fill the games list with parse and formatted games 
 //need to add amount of current players to display
 socket.on('returnGames', function(games){
+    console.log(games);
     for(rep = 0; rep<games.length; rep++)
     {
-        console.log(games[rep].gameId + " " + games[rep].playernum + " " + games[rep].password);
+        console.log(games[rep].gameName + " " + games[rep].playernum + " " + games[rep].password);
         tab = document.createElement("button");
-        tab.innerHTML = games[rep].gameId + " " + games[rep].playerlist.length + "/" + games[rep].playernum;
+        tab.innerHTML = games[rep].gameName + " " + games[rep].playerlist.length + "/" + games[rep].playernum;
         tab.style = "padding: 16px 32px; text-align: left; text-decoration: none; display: inline-block; font-size: 30px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer; width:95%;";
         document.getElementById("serve").appendChild(tab);
         
