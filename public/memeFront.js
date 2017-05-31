@@ -17,6 +17,8 @@ var socket = io();
 
 socket.on('getGame', function(gameobj){
     game = gameobj;
+    buildGame(game.gameId);
+
 });
 
 socket.on('getPlayer', function(playerobj){
@@ -45,7 +47,7 @@ function bye()
     
     if(getNickname() !== "" && getGame() !== "")
     {
-        buildGame();
+       // buildGame();
         
     }
     
@@ -131,7 +133,7 @@ function menu()
 
 
 
-function buildGame()
+function buildGame(gamename)
 {
     //rating: solid
     
@@ -144,7 +146,7 @@ function buildGame()
     document.getElementById("back").onclick = menu;
     if(getGame() === "")
     {
-        document.cookie = " game=" + document.getElementById("gamename").value + ";";
+        document.cookie = " game=" +gamename+";";
     }
     
     window.location.href = "#game=" + getGame();
@@ -176,8 +178,6 @@ function createGame()
 
         socket.emit('hostCreateNewGame', document.getElementById("gamename").value, document.getElementById("box").value, document.getElementById("pw").value, getNickname(), socket.id);
         
-        buildGame();
-
     }
 
 }
@@ -208,7 +208,7 @@ function getReal()
         if(getGame() !== "")
         {
             document.getElementById("init").style.display = "none";
-            buildGame();
+           // buildGame();
             crea = false;
         }
         
@@ -272,7 +272,9 @@ socket.on('returnGames', function(games){
         tab.style = "padding: 16px 32px; text-decoration: none; font-size: 30px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer; width:100%; border: 4px solid black; text-align:left; background-color: white";
         tab.setAttribute("name", games[rep].gameName);
         tab.setAttribute("pw", games[rep].password);
-        tab.setAttribute("gId", games[rep].gameId)
+        tab.setAttribute("gId", games[rep].gameId);
+        tab.setAttribute("players", games[rep].playernum)
+        tab.setAttribute("players", games[rep].playerlist)
         tab.setAttribute("selected", "false");
 
         tab.onclick = function(){placehold(this)};
@@ -289,6 +291,7 @@ function placehold(game)
     {
         document.getElementById("serve").childNodes[rep].style.color = "black";
         document.getElementById("serve").childNodes[rep].style.backgroundColor = "white";
+        game.setAttribute("selected", "false");
     }
     game.style.color = "white";
     game.style.backgroundColor = "orange";
@@ -316,19 +319,25 @@ function attemptJoin(game)
         testfor.placeholder = "password";
         testfor.style.textAlign = "left"
         document.getElementById("browse").appendChild(testfor);
-        document.getElementById("browse").onclick = pwcheck;
+        document.getElementById("browse").onclick = function(){pwcheck(game)};
     }
     else
-    {
-        joinGameFromBrowser(game.getAttribute("gId"));
+    {   
+        socket.emit("joinGame", game.getAttribute("gId"), getNickname(), socket.id)
+
     }
 }
 
-function pwcheck()
+function pwcheck(game)
 {
-    if(f)
+    if(f && testfor.value === game.getAttribute("pw"))
     {
-        console.log("test")
+        socket.emit("joinGame", game.getAttribute("gId"), getNickname(), socket.id)
+        
+    }
+    else if( f && testfor.value !== game.getAttribute("pw"))
+    {
+           console.log("suck it nerd") 
     }
     f = true;
 }
@@ -370,11 +379,6 @@ function selectNew()
 
     }
 
-    div = document.createElement("div");
-    div.id = "values";
-    div.style = "text-align: center"
-    
-    div.appendChild(box);
 
     var password = document.createElement("input");
     password.id = "pw";
@@ -383,6 +387,7 @@ function selectNew()
 
     var words = document.createElement("div");
     var optional = document.createElement("div");
+    var num = document.createElement("div");
     
     words.id = "words";
     words.innerHTML = "Game Name: ";
@@ -399,6 +404,13 @@ function selectNew()
     crap.id = "crap";
     crap.style.display = "inline";
     
+    num.id = "num";
+    num.innerHTML = "max. # of players";
+    num.appendChild(document.createElement("br"));
+    num.appendChild(box);
+    num.style = "text-align: center; color: white; font-size:30px"
+
+    
    // document.getElementById("original").appendChild(crap);
 
     crap.appendChild(document.createElement("br"));
@@ -408,7 +420,7 @@ function selectNew()
     crap.appendChild(document.createElement("br"));
     crap.appendChild(optional);
     crap.appendChild(document.createElement("br"));
-    crap.appendChild(div);
+    crap.appendChild(num);
     
     document.getElementById("original").appendChild(crap);
 

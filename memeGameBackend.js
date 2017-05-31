@@ -24,10 +24,12 @@ exports.createGame = function(sio, socket)
     gameSocket.on('disconnect', function(){players--; console.log(players);});
     gameSocket.on('getGames', giveGames);
     gameSocket.on('playerLeave', playerLeave);
+    gameSocket.on("joinGame", joinGame)
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
     gameSocket.on('playerAnswer', playerAnswer);
+    
     
 
 }
@@ -93,6 +95,22 @@ function removeEmpty()
         if(gamelist[rep].playerlist.length < 0)
             gamelist.splice(rep, rep+1);
     }
+}
+
+function joinGame(gId, name, pId)
+{
+    for(game in gamelist)
+    {
+        if(game.gameId === gId)
+            sup = game;
+    }
+    
+    player = new Player(name, pId);
+    
+    sup.playerlist.push(player);
+    
+    gameSocket.emit('getGame', sup);
+    gameSocket.emit('getPlayer', player);
 }
 
 //host functions
