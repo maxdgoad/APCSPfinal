@@ -324,7 +324,7 @@ function attemptJoin(game)
     else
     {   
         socket.emit("joinGame", game.getAttribute("gId"), getNickname(), socket.id)
-
+        console.log("why")
     }
 }
 
