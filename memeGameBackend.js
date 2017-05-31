@@ -90,7 +90,7 @@ function removeEmpty()
 {
     for(rep = 0; rep<gamelist.length; rep++)
     {
-        if(gamelist[rep].playerlist.length < 1)
+        if(gamelist[rep].playerlist.length < 0)
             gamelist.splice(rep, rep+1);
     }
 }

@@ -102,6 +102,7 @@ function menu()
     document.getElementById("info").style = "transform: translateY(0px); position:relative";
 
 
+    document.getElementById("browse").onclick = gamebrowser;
     document.getElementById("browse").innerHTML = "Browse Games";
     document.getElementById("newgame").innerHTML = "New Game";
 
@@ -234,10 +235,11 @@ function gamebrowser()
     document.getElementById("browse").style = "transform: translateY(-100px); position:relative;";
 
     document.getElementById("browse").innerHTML = "join"
+    document.getElementById("browse").onclick = findSelected;
     
     list = document.createElement("div");
     list.id = "serve";
-    list.style = "width: 50%; padding:1%; border: 4px solid #000000; margin:auto; color:black; text-align: center; position:absolute; overflow:scroll; height:400px; padding-bottom: -400px; left:24%; background: rgba(255,255,255,.75); transform: translateY(-70px);"
+    list.style = "width: 50%; padding:1%; border: 4px solid #000000; color:black; position:absolute; overflow:scroll; height:410px; padding-bottom: -400px; left:24%; background: rgba(255,255,255,.75); transform: translateY(-70px);"
     
     socket.emit('getGames', socket.id);
     document.getElementById("original").appendChild(list);
@@ -249,18 +251,87 @@ function gamebrowser()
 //this line will fill the games list with parse and formatted games 
 //need to add amount of current players to display
 socket.on('returnGames', function(games){
-    console.log(games);
+    var tab;
     for(rep = 0; rep<games.length; rep++)
     {
-        console.log(games[rep].gameName + " " + games[rep].playernum + " " + games[rep].password);
+        
         tab = document.createElement("button");
-        tab.innerHTML = games[rep].gameName + " " + games[rep].playerlist.length + "/" + games[rep].playernum;
-        tab.style = "padding: 16px 32px; text-align: left; text-decoration: none; display: inline-block; font-size: 30px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer; width:95%;";
+        left = document.createElement("span");
+        right = document.createElement("span");
+        
+        left.innerHTML = games[rep].gameName;
+        left.style = "float:left;"
+        
+        right.innerHTML =games[rep].playerlist.length + "/" + games[rep].playernum;
+        right.style = "float:left"
+                
+        tab.appendChild(left);
+        tab.appendChild(right);
+
+        
+        tab.style = "padding: 16px 32px; text-decoration: none; font-size: 30px; margin: 4px 2px; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; cursor: pointer; width:100%; border: 4px solid black; text-align:left; background-color: white";
+        tab.setAttribute("name", games[rep].gameName);
+        tab.setAttribute("pw", games[rep].password);
+        tab.setAttribute("gId", games[rep].gameId)
+        tab.setAttribute("selected", "false");
+
+        tab.onclick = function(){placehold(this)};
         document.getElementById("serve").appendChild(tab);
         
     }
     
 });
+
+var selected;
+function placehold(game)
+{
+    for(rep = 0; rep< document.getElementById("serve").childNodes.length; rep++)
+    {
+        document.getElementById("serve").childNodes[rep].style.color = "black";
+        document.getElementById("serve").childNodes[rep].style.backgroundColor = "white";
+    }
+    game.style.color = "white";
+    game.style.backgroundColor = "orange";
+    game.setAttribute("selected", "true");
+
+
+}
+
+function findSelected()
+{
+    for(rep = 0; rep< document.getElementById("serve").childNodes.length; rep++)
+    {
+        if(document.getElementById("serve").childNodes[rep].getAttribute("selected") === "true")
+            attemptJoin(document.getElementById("serve").childNodes[rep]);
+    }
+}
+var f = false;
+function attemptJoin(game)
+{
+    f = false;
+    if(game.getAttribute("pw") !== "")
+    {
+        testfor = document.createElement("input");
+        testfor.type = "text";
+        testfor.placeholder = "password";
+        testfor.style.textAlign = "left"
+        document.getElementById("browse").appendChild(testfor);
+        document.getElementById("browse").onclick = pwcheck;
+    }
+    else
+    {
+        joinGameFromBrowser(game.getAttribute("gId"));
+    }
+}
+
+function pwcheck()
+{
+    if(f)
+    {
+        console.log("test")
+    }
+    f = true;
+}
 
 function selectNew()
 {
