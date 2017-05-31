@@ -47,7 +47,7 @@ function bye()
     
     if(getNickname() !== "" && getGame() !== "")
     {
-       // buildGame();
+         buildGame(getGame());
         
     }
     
@@ -148,9 +148,17 @@ function buildGame(gamename)
     {
         document.cookie = " game=" +gamename+";";
     }
-    
+    //adds url to query tags
     window.location.href = "#game=" + getGame();
-    
+    //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
+    //must send this function amount of players too in the future
+    var players = 4;
+   for(r = 0; r < players; r++){
+    var card = document.createElement("div");
+    card.className = "w3-card-4 w3-yellow w3-center";
+    document.body.appendChild(card);
+    card.innerHTML = "a meme";
+    }
 }
 
 function createGame()
