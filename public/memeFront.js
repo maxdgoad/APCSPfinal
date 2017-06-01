@@ -357,8 +357,14 @@ function findSelected()
 {
     for(rep = 0; rep< document.getElementById("serve").childNodes.length; rep++)
     {
+        
         if(document.getElementById("serve").childNodes[rep].getAttribute("selected") === "true")
+        {
+            document.getElementById("serve").childNodes[rep].setAttribute("selected", "false");
+            
             attemptJoin(document.getElementById("serve").childNodes[rep]);
+            document.getElementById("browse").style.display = "none";
+        }
     }
 }
 var f = false;
@@ -377,8 +383,8 @@ function attemptJoin(game)
     else if(game.getAttribute("pw") === "" )
     {   
         socket.emit("joinGame", game.getAttribute("gId"), getNickname(), socket.id)
-        console.log("why")
-        return false;
+       
+        
     }
 }
 
