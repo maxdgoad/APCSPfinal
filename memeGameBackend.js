@@ -25,6 +25,7 @@ exports.createGame = function(sio, socket)
     gameSocket.on('getGames', giveGames);
     gameSocket.on('playerLeave', playerLeave);
     gameSocket.on("joinGame", joinGame)
+    gameSocket.on("sendMsg", roomMsg);
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -32,6 +33,11 @@ exports.createGame = function(sio, socket)
     
     
 
+}
+
+function roomMsg(msg, gId)
+{
+    io.to(gId).emit("getMsg", msg)
 }
 
 function giveGames(son)
@@ -69,22 +75,24 @@ function playerLeave(game, player)
     //this is REAL oop
     //do you want to be a REAL race car driver 
     // removes player from playerlist of a game
-    
-    for(rep = 0; rep<gamelist.length; rep++)
+    if(gamelist.length > 0)
     {
-         if(game.gameId === gamelist[rep].gameId)   
-             removeg = rep;
+        for(rep = 0; rep<gamelist.length; rep++)
+        {
+             if(game === gamelist[rep].gameId)   
+                 removeg = rep;
+        }
+
+        for(rep2 = 0; rep2 < gamelist[removeg].playerlist.length; rep2++)
+        {
+             if(player === gamelist[removeg].playerlist[rep2].id)   
+                 removep = rep2;
+        }
+
+        gamelist[removeg].playerlist.splice(removep, removep + 1);
+        console.log(game + " " + player + " " + removeg + " " + removep)
+        removeEmpty();
     }
-    
-    for(rep2 = 0; rep2<game.playerlist.length; rep2++)
-    {
-         if(player.id === game.playerlist[rep2].id)   
-             removep = rep2;
-    }
-    console.log(removeg);
-    console.log(removep)
-    gamelist[removeg].playerlist.splice(removep, removep + 1);
-    removeEmpty();
   
 }
 
@@ -99,6 +107,7 @@ function removeEmpty()
 
 function joinGame(gId, name, pId)
 {
+    gameSocket.join(gId);
     for(game in gamelist)
     {
         if(game.gameId === gId)
@@ -106,6 +115,8 @@ function joinGame(gId, name, pId)
     }
     
     player = new Player(name, pId);
+    
+    gameSocket.join(gId)
     
     sup.playerlist.push(player);
     
@@ -123,6 +134,8 @@ function hostCreateNewGame(gameName, players, password, name, pId)
     
     sup.playerlist.push(player);
     gamelist.push(sup);
+    
+    gameSocket.join(sup.gameId)
     
     gameSocket.emit('getGame', sup);
     gameSocket.emit('getPlayer', player);

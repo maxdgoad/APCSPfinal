@@ -1,7 +1,3 @@
-//I am taking things from crazyscript.js and cleaning/commenting them into here. Also may start adding emits as I go
-//Here a we go
-
-//you know what it is boy
 
 var div
 var loaded = false;
@@ -17,6 +13,7 @@ var socket = io();
 
 socket.on('getGame', function(gameobj){
     game = gameobj;
+    
     buildGame(game.gameId);
 
 });
@@ -47,7 +44,7 @@ function bye()
     
     if(getNickname() !== "" && getGame() !== "")
     {
-       // buildGame();
+         socket.emit("joinGame", getGame(), getNickname(), socket.id)
         
     }
     
@@ -76,18 +73,21 @@ function getBackToNick()
 
 function menu()
 {
-    if(game !== null && player !== null)
+    if(getGame() !== null && getNickname() !== null)
     {
-        socket.emit('playerLeave', game, player);
+        socket.emit('playerLeave', getGame(), socket.id);
         game = null;
-        player = null;
+        player = null;  
     }
     
     //rating: could be improved
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
+    if(document.getElementById("wrap") !== null)
+    {
     
-    
+        document.getElementById("wrap").style.display = "none";
+    }
     
     document.getElementById("back").style.display = "inline";
     document.getElementById("back").innerHTML = "< Change name";
@@ -149,8 +149,44 @@ function buildGame(gamename)
         document.cookie = " game=" +gamename+";";
     }
     
+    wrap = document.createElement("div");
+    wrap.id ="wrap"
+    wrap.style = "text-align: center; height:50%"
+    
+    t = document.createElement("input");
+    t.type = "text";
+    
+    send = document.createElement("button");
+    send.innerHTML = "send";
+    send.onclick = function(){add(t.value, gamename)};
+
+    
+    bigd =  document.createElement("div");
+    bigd.style.color = "black"
+    bigd.style = "text-align:center; color:black"
+    bigd.id ="bigd"
+    
+    document.body.appendChild(wrap); 
+    wrap.appendChild(bigd);
+    wrap.appendChild(t);
+    wrap.appendChild(send);
+
+    
+    socket.on("getMsg", function(msg){
+        bigd.appendChild(document.createElement("br"))
+        bigd.innerHTML += msg;
+        console.log(msg)
+    });
+    
     window.location.href = "#game=" + getGame();
     
+}
+
+function add(msg, gId)
+{
+    t.value = "";
+    
+    socket.emit("sendMsg", msg, gId);
 }
 
 function createGame()
