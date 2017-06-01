@@ -13,8 +13,10 @@ var socket = io();
 
 socket.on('getGame', function(gameobj){
     game = gameobj;
-    
+    socket.emit("joinRoom", game.gameId);
+    document.cookie = " game=" +game.gameId+";";
     buildGame(game.gameId);
+    console.log(game.gameId)
 
 });
 
@@ -75,8 +77,9 @@ function getBackToNick()
 
 function menu()
 {
-    if(getGame() !== null && getNickname() !== null)
+    if(getGame() !== "" && getNickname() !== "")
     {
+        
         socket.emit('playerLeave', getGame(), socket.id);
         game = null;
         player = null;  
@@ -85,11 +88,7 @@ function menu()
     //rating: could be improved
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
-    if(document.getElementById("wrap") !== null)
-    {
-    
-        document.getElementById("wrap").style.display = "none";
-    }
+
     
     document.getElementById("back").style.display = "inline";
     document.getElementById("back").innerHTML = "< Change name";
@@ -175,11 +174,6 @@ function buildGame(gamename)
     wrap.appendChild(send);
 
     
-    socket.on("getMsg", function(msg){
-        bigd.appendChild(document.createElement("br"))
-        bigd.innerHTML += msg;
-        console.log(msg)
-    });
     
 
     //adds url to query tags
@@ -188,19 +182,28 @@ function buildGame(gamename)
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
     var players = 4;
-   for(r = 0; r < players; r++){
-    var card = document.createElement("div");
-    card.className = "w3-card-4 w3-yellow w3-center";
-    document.body.appendChild(card);
-    card.innerHTML = "a meme";
+    for(r = 0; r < players; r++){
+        var card = document.createElement("div");
+        card.className = "w3-card-4 w3-yellow w3-center";
+        card.style = "width:10%; float:center"
+        document.body.appendChild(card);
+        card.innerHTML = "a meme";
     }
+    
 }
+
+
+socket.on("getMsg", function(name, msg){
+        document.getElementById("bigd").appendChild(document.createElement("br"));
+        document.getElementById("bigd").innerHTML += name + ": " + msg;
+        console.log(socket.id);
+});
+
 
 function add(msg, gId)
 {
     t.value = "";
-    
-    socket.emit("sendMsg", msg, gId);
+    socket.emit("sendMsg", msg, gId, getNickname());
 }
 
 function createGame()
@@ -371,10 +374,11 @@ function attemptJoin(game)
         document.getElementById("browse").appendChild(testfor);
         document.getElementById("browse").onclick = function(){pwcheck(game)};
     }
-    else
+    else if(game.getAttribute("pw") === "" )
     {   
         socket.emit("joinGame", game.getAttribute("gId"), getNickname(), socket.id)
         console.log("why")
+        return false;
     }
 }
 

@@ -26,6 +26,8 @@ exports.createGame = function(sio, socket)
     gameSocket.on('playerLeave', playerLeave);
     gameSocket.on("joinGame", joinGame)
     gameSocket.on("sendMsg", roomMsg);
+    gameSocket.on("joinRoom", joinRoom)
+
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -35,15 +37,18 @@ exports.createGame = function(sio, socket)
 
 }
 
-function roomMsg(msg, gId)
+
+function roomMsg(msg, gId, name)
 {
-    io.to(gId).emit("getMsg", msg)
+    console.log(Object.keys(io.sockets.sockets));
+    io.sockets.in(gId).emit("getMsg", name, msg);
+    
 }
 
-function giveGames(son)
+function giveGames(pId)
 {
     
-    io.to(son).emit('returnGames', gamelist);
+    io.to(pId).emit('returnGames', gamelist);
 
 }
 
@@ -75,6 +80,7 @@ function playerLeave(game, player)
     //this is REAL oop
     //do you want to be a REAL race car driver 
     // removes player from playerlist of a game
+    gameSocket.leave(game);
     if(gamelist.length > 0)
     {
         for(rep = 0; rep<gamelist.length; rep++)
@@ -105,9 +111,15 @@ function removeEmpty()
     }
 }
 
-function joinGame(gId, name, pId)
+function joinRoom(gId)
 {
     gameSocket.join(gId);
+}
+
+function joinGame(gId, name, pId)
+{
+  
+   
     for(game in gamelist)
     {
         if(game.gameId === gId)
@@ -115,13 +127,12 @@ function joinGame(gId, name, pId)
     }
     
     player = new Player(name, pId);
-    
-    gameSocket.join(gId)
+
     
     sup.playerlist.push(player);
     
-    gameSocket.emit('getGame', sup);
-    gameSocket.emit('getPlayer', player);
+    io.to(pId).emit('getGame', sup);
+    io.to(pId).emit('getPlayer', player);
 }
 
 //host functions
@@ -134,11 +145,10 @@ function hostCreateNewGame(gameName, players, password, name, pId)
     
     sup.playerlist.push(player);
     gamelist.push(sup);
+  
     
-    gameSocket.join(sup.gameId)
-    
-    gameSocket.emit('getGame', sup);
-    gameSocket.emit('getPlayer', player);
+    io.to(pId).emit('getGame', sup);
+    io.to(pId).emit('getPlayer', player);
     
     
     console.log("New game: id = " + gameName + " pw = " + password + " plnum = " + players);
