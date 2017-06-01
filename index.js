@@ -7,7 +7,7 @@ var server = require('http').Server(app);
 // Create a Socket.IO server and attach it to the http server
 var io = require('socket.io')(server);
 //a Node.js based http server on port 80
-server.listen(80, '0.0.0.0');
+server.listen(80);
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
