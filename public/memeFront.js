@@ -14,6 +14,7 @@ var socket = io();
 socket.on('getGame', function(gameobj){
     game = gameobj;
     socket.emit("joinRoom", game.gameId);
+    
     document.cookie = " game=" +game.gameId+";";
     buildGame(game.gameId);
     console.log(game.gameId)
@@ -23,6 +24,8 @@ socket.on('getGame', function(gameobj){
 socket.on('getPlayer', function(playerobj){
    player = playerobj; 
 });
+
+socket.on("joinedRoom", function(){console.log("good morning America, how are ya?")});
 
 function bye()
 {

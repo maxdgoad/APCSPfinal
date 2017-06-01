@@ -24,9 +24,9 @@ exports.createGame = function(sio, socket)
     gameSocket.on('disconnect', function(){players--; console.log(players);});
     gameSocket.on('getGames', giveGames);
     gameSocket.on('playerLeave', playerLeave);
-    gameSocket.on("joinGame", joinGame)
+    gameSocket.on("joinGame", joinGame);
     gameSocket.on("sendMsg", roomMsg);
-    gameSocket.on("joinRoom", joinRoom)
+    gameSocket.on("joinRoom", joinRoom);
 
 
     // Player Events
@@ -41,7 +41,7 @@ exports.createGame = function(sio, socket)
 function roomMsg(msg, gId, name)
 {
     console.log(Object.keys(io.sockets.sockets));
-    io.sockets.in(gId).emit("getMsg", name, msg);
+    io.to(gId).emit("getMsg", name, msg);
     
 }
 
@@ -114,6 +114,8 @@ function removeEmpty()
 function joinRoom(gId)
 {
     gameSocket.join(gId);
+    gameSocket.room = gId
+    io.to(gId).emit("joinedRoom");
 }
 
 function joinGame(gId, name, pId)
