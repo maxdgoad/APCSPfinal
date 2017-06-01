@@ -44,11 +44,9 @@ function bye()
     
     if(getNickname() !== "" && getGame() !== "")
     {
-<<<<<<< HEAD
+
          socket.emit("joinGame", getGame(), getNickname(), socket.id)
-=======
-         buildGame(getGame());
->>>>>>> 4b572491e579bf6618ffd5a167a6ce08bb7ef1cd
+
         
     }
     
@@ -152,7 +150,7 @@ function buildGame(gamename)
     {
         document.cookie = " game=" +gamename+";";
     }
-<<<<<<< HEAD
+
     
     wrap = document.createElement("div");
     wrap.id ="wrap"
@@ -183,9 +181,9 @@ function buildGame(gamename)
         console.log(msg)
     });
     
-=======
+
     //adds url to query tags
->>>>>>> 4b572491e579bf6618ffd5a167a6ce08bb7ef1cd
+
     window.location.href = "#game=" + getGame();
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
