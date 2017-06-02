@@ -9,15 +9,16 @@ var player = null;
 var read = false;
 var crea = false;
 
-var socket = io();
+ var socket = io();
 
 socket.on('getGame', function(gameobj){
     game = gameobj;
-    socket.emit("joinRoom", game.gameId);
+  
     
     document.cookie = " game=" +game.gameId+";";
     buildGame(game.gameId);
-    console.log(game.gameId)
+    console.log("game " + game.gameId);
+    console.log("player " + socket.id);
 
 });
 
@@ -82,12 +83,16 @@ function menu()
 {
     if(getGame() !== "" && getNickname() !== "")
     {
-        
         socket.emit('playerLeave', getGame(), socket.id);
         game = null;
         player = null;  
     }
     
+    if(document.getElementById("wrap") !== null)
+    {
+    
+        document.body.removeChild(document.getElementById("wrap"));
+    }
     //rating: could be improved
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
@@ -182,8 +187,11 @@ function buildGame(gamename)
     //adds url to query tags
 
     window.location.href = "#game=" + getGame();
+    
+    socket.emit("joinRoom", gamename, socket.id);
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
+    /*
     var players = 4;
     for(r = 0; r < players; r++){
         var card = document.createElement("div");
@@ -192,6 +200,7 @@ function buildGame(gamename)
         document.body.appendChild(card);
         card.innerHTML = "a meme";
     }
+    */
     
 }
 
@@ -199,7 +208,7 @@ function buildGame(gamename)
 socket.on("getMsg", function(name, msg){
         document.getElementById("bigd").appendChild(document.createElement("br"));
         document.getElementById("bigd").innerHTML += name + ": " + msg;
-        console.log(socket.id);
+        
 });
 
 
@@ -364,9 +373,8 @@ function findSelected()
         if(document.getElementById("serve").childNodes[rep].getAttribute("selected") === "true")
         {
             document.getElementById("serve").childNodes[rep].setAttribute("selected", "false");
-            
             attemptJoin(document.getElementById("serve").childNodes[rep]);
-            document.getElementById("browse").style.display = "none";
+            
         }
     }
 }

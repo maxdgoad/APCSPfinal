@@ -17,6 +17,7 @@ exports.createGame = function(sio, socket)
     
     players++; 
     console.log(players);
+    console.log(socket.id);
 
     // Host Events
     gameSocket.on('hostCreateNewGame', hostCreateNewGame);
@@ -40,8 +41,9 @@ exports.createGame = function(sio, socket)
 
 function roomMsg(msg, gId, name)
 {
-    console.log(Object.keys(io.sockets.sockets));
-    io.to(gId).emit("getMsg", name, msg);
+
+    console.log("inroom " + Object.keys(io.sockets.sockets));
+    io.in(gId).emit("getMsg", name, msg);
     
 }
 
@@ -111,11 +113,15 @@ function removeEmpty()
     }
 }
 
-function joinRoom(gId)
+function joinRoom(gId, pId)
 {
-    gameSocket.join(gId);
-    gameSocket.room = gId
-    io.to(gId).emit("joinedRoom");
+    console.log(pId)
+    for(rep = 0; rep<10; rep++)
+    {
+        this.join(gId);
+
+        io.in(gId).emit("joinedRoom");
+    }
 }
 
 function joinGame(gId, name, pId)
