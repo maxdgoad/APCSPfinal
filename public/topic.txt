@@ -143,4 +143,20 @@ emoji
 snapchat
 japan
 html
+broccoli
+chair
+dorito
+gas
+shoe
+picture
+friend
+south park
+harry potter
+pepsi
+game of thrones
+batman
+china
+sleep
+food
+nuggets
 

@@ -1,5 +1,5 @@
 
-var div
+var div;
 var loaded = false;
 var already = false;
 var created = false;
@@ -159,26 +159,41 @@ function buildGame(gamename)
     
     wrap = document.createElement("div");
     wrap.id ="wrap"
-    wrap.style = "text-align: center; height:50%"
+    wrap.style = "  height: 75%; position: relative; margin: auto; width: 20%; padding: 70px 0;transform: translate(-200%, 0); "
     
     t = document.createElement("input");
     t.type = "text";
+    t.style = "bottom: 0; left: 0;  position: absolute; width: 110%"
+    t.onkeydown = function(){
+        if(event.keyCode == 13){
+         add(t.value, gamename);   
+        }
+    };
     
+    /*
     send = document.createElement("button");
+    send.id = "send";
     send.innerHTML = "send";
+    send.className = "buttonRed"
+    send.onmouseover = sendGreen;
+    send.onmouseout = sendBack;
     send.onclick = function(){add(t.value, gamename)};
-
+    */
     
     bigd =  document.createElement("div");
     bigd.style.color = "black"
-    bigd.style = "text-align:center; color:black"
+    bigd.style = "text-align:center; color:black; overflow-y:scroll; background: rgba(170,170,170,.75); width: 110%; margin: 0 auto; overflow-x: hidden; height: 100%;border: 4px solid black; "
     bigd.id ="bigd"
     
     document.body.appendChild(wrap); 
+    bigd.appendChild(t);
     wrap.appendChild(bigd);
-    wrap.appendChild(t);
-    wrap.appendChild(send);
+   // wrap.appendChild(send);
 
+    canvas = document.createElement("canvas");
+    canvas.className = "whiteboard";
+    
+    document.body.appendChild(canvas);
     
     
 
@@ -189,24 +204,34 @@ function buildGame(gamename)
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
     
-    var players = 4;
-    for(r = 0; r < players; r++){
-        var card = document.createElement("div");
-        card.className = "w3-card-4 w3-yellow w3-center";
-        card.style = "width:10%; float:center"
-        document.getElementById("wrap").appendChild(card);
-        card.innerHTML = "a meme";
-        var img = document.createElement("img");
-        
-    }
+    
    
     
 }
 
+function search(ele) {
+    if(event.keyCode == 13) {
+        alert(ele.value);        
+    }
+}
+
+
+ window.addEventListener('resize', onResize, false);
+
+function onResize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
 
 socket.on("getMsg", function(name, msg){
         document.getElementById("bigd").appendChild(document.createElement("br"));
-        document.getElementById("bigd").innerHTML += name + ": " + msg;
+        div = document.createElement('p');
+        div.innerHTML += name + ": " + msg;
+        div.style = "display: table-cell; vertical-align: bottom; width: 100%; word-wrap:break-word; display:inline"
+        document.getElementById("bigd").appendChild(div);
+        div.scrollIntoView()
+        
         
 });
 
@@ -633,6 +658,18 @@ function isItNoB()
 {
     document.getElementById("browse").style.backgroundColor = "white";       
     document.getElementById("browse").style.color = "black"; 
+}
+
+function sendBack()
+{
+    document.getElementById("send").style.backgroundColor = "green";       
+    document.getElementById("send").style.color = "white"; 
+}
+
+function sendGreen()
+{
+    document.getElementById("send").style.backgroundColor = "white";       
+    document.getElementById("send").style.color = "black"; 
 }
 
 function changeColOn()

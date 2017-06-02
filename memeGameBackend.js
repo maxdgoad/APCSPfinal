@@ -27,6 +27,7 @@ exports.createGame = function(sio, socket)
     gameSocket.on('playerLeave', playerLeave);
     gameSocket.on("joinGame", joinGame);
     gameSocket.on("sendMsg", roomMsg);
+    gameSocket.on('drawing', drawing);
 
 
 
@@ -38,6 +39,10 @@ exports.createGame = function(sio, socket)
 
 }
 
+function drawing(data, gId)
+{
+    io.in(gId).emit('drawing', data); 
+}
 
 function roomMsg(msg, gId, name)
 {
