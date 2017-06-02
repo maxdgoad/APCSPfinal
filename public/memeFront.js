@@ -54,7 +54,8 @@ function bye()
     if(getNickname() !== "" && getGame() !== "")
     {
 
-         socket.emit("joinGame", getGame(), getNickname(), socket.id)
+         document.cookie = "game=;";
+        menu();
 
         
     }

@@ -24,3 +24,7 @@ io.sockets.on('connection', function (socket) {
 });
 server.listen(80);
 
+process.on('uncaughtException', function (exception) {
+   console.log("that one error")
+  });
+
