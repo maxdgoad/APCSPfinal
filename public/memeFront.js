@@ -26,8 +26,6 @@ socket.on('getPlayer', function(playerobj){
    player = playerobj; 
 });
 
-socket.on("joinedRoom", function(){console.log("good morning America, how are ya?")});
-
 function bye()
 {
     
@@ -188,7 +186,6 @@ function buildGame(gamename)
 
     window.location.href = "#game=" + getGame();
     
-    socket.emit("joinRoom", gamename, socket.id);
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
     
@@ -199,6 +196,8 @@ function buildGame(gamename)
         card.style = "width:10%; float:center"
         document.getElementById("wrap").appendChild(card);
         card.innerHTML = "a meme";
+        var img = document.createElement("img");
+        
     }
    
     
@@ -359,7 +358,7 @@ function placehold(game)
         game.setAttribute("selected", "false");
     }
     
-    
+    //console.log(game.getAttribute("name"))
     if(game.getAttribute("pw") !== "" && document.getElementById("testfor") === null)
     {
         testfor = document.createElement("input");
@@ -369,11 +368,14 @@ function placehold(game)
         testfor.style.textAlign = "left"
         document.getElementById("browse").appendChild(testfor);
         document.getElementById("browse").onclick = function(){pwcheck(game)};
+        
     }
     
     else if(game.getAttribute("pw") === "" && document.getElementById("testfor") !== null)
     {
-           document.getElementById("browse").removeChild(testfor); 
+           document.getElementById("browse").removeChild(testfor);
+            console.log(game.getAttribute("name"))
+            document.getElementById("browse").onclick = findSelected;
     }
     
     game.style.color = "white";
@@ -426,7 +428,7 @@ function pwcheck(game)
     }
     else if( f && testfor.value !== game.getAttribute("pw"))
     {
-           console.log("suck it nerd") 
+           console.log("wrong pw") 
     }
     f = true;
 }
@@ -608,10 +610,6 @@ function isItNoGo()
     document.getElementById("gogo").style.color = "black"; 
 }
 
-function test()
-{
-    console.log("test");  
-}
 
 function blueBoy()
 {

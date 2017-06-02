@@ -27,7 +27,7 @@ exports.createGame = function(sio, socket)
     gameSocket.on('playerLeave', playerLeave);
     gameSocket.on("joinGame", joinGame);
     gameSocket.on("sendMsg", roomMsg);
-    gameSocket.on("joinRoom", joinRoom);
+
 
 
     // Player Events
@@ -112,16 +112,7 @@ function removeEmpty()
     }
 }
 
-function joinRoom(gId, pId)
-{
-    console.log(pId)
-    for(rep = 0; rep<10; rep++)
-    {
-        this.join(gId);
 
-        io.in(gId).emit("joinedRoom");
-    }
-}
 
 function joinGame(gId, name, pId)
 {
@@ -137,7 +128,7 @@ function joinGame(gId, name, pId)
 
     
     sup.playerlist.push(player);
-    
+    this.join(gId);
     io.to(pId).emit('getGame', sup);
     io.to(pId).emit('getPlayer', player);
 }
@@ -153,7 +144,7 @@ function hostCreateNewGame(gameName, players, password, name, pId)
     sup.playerlist.push(player);
     gamelist.push(sup);
   
-    
+    this.join(sup.gameId);
     io.to(pId).emit('getGame', sup);
     io.to(pId).emit('getPlayer', player);
     
