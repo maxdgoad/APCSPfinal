@@ -10,7 +10,7 @@ var read = false;
 var crea = false;
 var drawing = false;
 var context;
- var current = {
+var current = {
     color: 'black'
   };
 
@@ -124,7 +124,7 @@ function menu()
 
 
     document.getElementById("browse").onclick = gamebrowser;
-    document.getElementById("browse").innerHTML = "Browse Games";
+    document.getElementById("browse").innerHTML = "Browse games";
     document.getElementById("newgame").innerHTML = "New Game";
 
     document.getElementById("original").style.display = "inline"; 
@@ -181,6 +181,7 @@ function buildGame(gamename)
     //this really should be called join game, just joins a game
     //changes query string, and cookie
     //will be used for players joining from server browser
+    //update this also draws like evrything for the game 
     document.getElementById("original").style.display = "none";
     temp = document.getElementById("temp")
     document.getElementById("back").style.display = "inline";
@@ -232,8 +233,33 @@ function buildGame(gamename)
     context = canvas.getContext('2d');
     
     document.body.appendChild(canvas);
-    
-    canvas.addEventListener('mousedown', onMouseDown, false);
+    //lets see if this works should add colors
+    var colors = document.createElement("div");
+    colors.className = "colors";
+    colors.style = "position: absolute"
+    document.body.appendChild(colors);
+    var black = document.createElement("button");
+    black.className = "color black";
+    black.onclick = function(){current.color = "black"};
+    colors.appendChild(black);
+    var red = document.createElement("button");
+    red.className = "color red";
+    red.onclick = function(){current.color = "red"};
+    colors.appendChild(red);
+    var green = document.createElement("button");
+    green.className = "color green";
+    green.onclick = function(){current.color = "green"};
+    colors.appendChild(green);
+    var blue = document.createElement("button");
+    blue.className = "color blue";
+    blue.onclick = function(){current.color = "blue"};
+    colors.appendChild(blue);
+    var yellow = document.createElement("button");
+    yellow.className = "color yellow";
+    yellow.onclick = function(){current.color = "yellow"};
+    colors.appendChild(yellow);
+
+  canvas.addEventListener('mousedown', onMouseDown, false);
   canvas.addEventListener('mouseup', onMouseUp, false);
   canvas.addEventListener('mouseout', onMouseUp, false);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
@@ -343,7 +369,7 @@ function createGame()
     if(document.getElementById("gamename").value === "" && !already)
     {
         var nDiv = document.createElement("div");
-        nDiv.innerHTML = "*Game name is required*";
+        nDiv.innerHTML = "*Room name is required*";
         nDiv.style = "color: red";
         div.appendChild(document.body.appendChild(document.createElement("br")));
         div.appendChild(document.body.appendChild(document.createElement("br")));
@@ -598,13 +624,13 @@ function selectNew()
     var num = document.createElement("div");
     
     words.id = "words";
-    words.innerHTML = "Game Name: ";
+    words.innerHTML = "Room name: ";
     words.appendChild(document.createElement("br"));
     words.appendChild(name);
     words.style = "text-align:center;color: black; font-size:30px; color:white"
 
     optional.id = "optional";
-    optional.innerHTML = "Game Password (optional): ";
+    optional.innerHTML = "Room Password (optional): ";
     optional.appendChild(document.createElement("br"));
     optional.appendChild(password);
     optional.style = "text-align: center; color: white; font-size:30px"
