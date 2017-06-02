@@ -7,7 +7,7 @@ var server = require('http').Server(app);
 // Create a Socket.IO server and attach it to the http server
 var io = require('socket.io')(server);
 //a Node.js based http server on port 80
-
+server.listen(80);
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');
@@ -22,7 +22,6 @@ io.sockets.on('connection', function (socket) {
     mgb.createGame(io, socket);
     
 });
-server.listen(80);
 
 process.on('uncaughtException', function (exception) {
    console.log("that one error")
