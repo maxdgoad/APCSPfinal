@@ -42,7 +42,6 @@ exports.createGame = function(sio, socket)
 function roomMsg(msg, gId, name)
 {
 
-    console.log("inroom " + Object.keys(io.sockets.sockets));
     io.in(gId).emit("getMsg", name, msg);
     
 }
