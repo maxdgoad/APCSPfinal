@@ -8,6 +8,11 @@ var player = null;
 
 var read = false;
 var crea = false;
+var drawing = false;
+var context;
+ var current = {
+    color: 'black'
+  };
 
  var socket = io();
 
@@ -145,6 +150,27 @@ function menu()
     
 }
 
+function drawLine(x0, y0, x1, y1, color, emit){
+    context.beginPath();
+    context.moveTo(x0, y0);
+    context.lineTo(x1, y1);
+    context.strokeStyle = color;
+    context.lineWidth = 2;
+    context.stroke();
+    context.closePath();
+
+    if (!emit) { return; }
+    var w = canvas.width;
+    var h = canvas.height;
+
+    socket.emit('drawing', {
+      x0: x0 / w,
+      y0: y0  / h,
+      x1: x1  / w,
+      y1: y1 / h,
+      color: color
+    }, getGame());
+  }
 
 
 function buildGame(gamename)
@@ -155,9 +181,12 @@ function buildGame(gamename)
     //changes query string, and cookie
     //will be used for players joining from server browser
     document.getElementById("original").style.display = "none";
+    temp = document.getElementById("temp")
     document.getElementById("back").style.display = "inline";
     document.getElementById("back").innerHTML = "< Leave";
     document.getElementById("back").onclick = menu;
+    document.body.removeChild(document.getElementById("temp"));
+    
     if(getGame() === "")
     {
         document.cookie = " game=" +gamename+";";
@@ -189,21 +218,27 @@ function buildGame(gamename)
     
     bigd =  document.createElement("div");
     bigd.style.color = "black"
-    bigd.style = "text-align:center; color:black; overflow-y:scroll; background: rgba(170,170,170,.75); width: 110%; margin: 0 auto; overflow-x: hidden; height: 100%;border: 4px solid black; "
+    bigd.style = "text-align:left; color:black; overflow-y:scroll; background: rgba(170,170,170,.75); width: 110%; margin: 0 auto; overflow-x: hidden; height: 100%;border: 4px solid black; font-size: 16px "
     bigd.id ="bigd"
     
-    document.body.appendChild(wrap); 
+    //document.body.appendChild(wrap); 
     bigd.appendChild(t);
     wrap.appendChild(bigd);
    // wrap.appendChild(send);
-
     canvas = document.createElement("canvas");
     canvas.id = "canvas"
     canvas.className = "whiteboard";
+    context = canvas.getContext('2d');
     
     document.body.appendChild(canvas);
     
+    canvas.addEventListener('mousedown', onMouseDown, false);
+  canvas.addEventListener('mouseup', onMouseUp, false);
+  canvas.addEventListener('mouseout', onMouseUp, false);
+  canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
     
+    window.addEventListener('resize', onResize, false);
+  onResize();
 
     //adds url to query tags
 
@@ -211,22 +246,70 @@ function buildGame(gamename)
     
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
-    
+    document.body.appendChild(temp);
+    document.body.appendChild(wrap);
+
     
    
     
 }
+socket.on('drawing', onDrawingEvent);
 
-function search(ele) {
-    if(event.keyCode == 13) {
-        alert(ele.value);        
-    }
+ 
+
+ function onDrawingEvent(data){
+    var w = canvas.width;
+    var h = canvas.height;
+    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+    console.log("what")
+  }
+
+function throttle(callback, delay) {
+    var previousCall = new Date().getTime();
+    return function() {
+      var time = new Date().getTime();
+
+      if ((time - previousCall) >= delay) {
+        previousCall = time;
+        callback.apply(null, arguments);
+      }
+    };
+  }
+
+function onMouseDown(e){
+    drawing = true;
+    current.x = e.clientX;
+    current.y = e.clientY;
+  }
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
 }
+
+  function onMouseUp(e){
+    if (!drawing) { return; }
+    drawing = false;
+    drawLine(current.x, current.y, e.clientX, e.clientY, current.color, true);
+  }
+
+  function onMouseMove(e){
+    if (!drawing) { return; }
+    drawLine(current.x, current.y, e.clientX, e.clientY, current.color, true);
+    current.x = e.clientX;
+    current.y = e.clientY;
+  }
+
+
 
 
  window.addEventListener('resize', onResize, false);
 
 function onResize() {
+    canvas = document.getElementById("canvas")
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
@@ -359,7 +442,7 @@ socket.on('returnGames', function(games){
         left.innerHTML = games[rep].gameName;
         left.style = "float:left;"
         
-        right.innerHTML =games[rep].playerlist.length + "/" + games[rep].playernum;
+        right.innerHTML ="";
         right.style = "float:left"
                 
         tab.appendChild(left);
@@ -532,7 +615,7 @@ function selectNew()
     num.innerHTML = "max. # of players";
     num.appendChild(document.createElement("br"));
     num.appendChild(box);
-    num.style = "text-align: center; color: white; font-size:30px"
+    num.style = "text-align: center; color: white; font-size:30px; display:none"
 
     
    // document.getElementById("original").appendChild(crap);

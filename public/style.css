@@ -18,17 +18,17 @@ html, body {
  */
 
 .whiteboard {
-  height: 60%;
-  width: 60%;
+  height: 100%;
+  width: 100%;
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: black;
+  background-color: white;
   margin-left: auto;
   margin-right: auto;
-    transform: translate(10%, 46%);
+
 
 }
 

@@ -39,7 +39,7 @@
             <button id="gogo" class="button buttonGo" onmouseover="isItGo();" onmouseout="isItNoGo();" onclick="getReal();">Go</button>
         </div>
         
-        <div style="text-align:left;">
+        <div style="text-align:left;" id= "temp">
             <button id="back" style = "display:none; position:absolute" class = "back" onmouseover="changeColOn();" onmouseout="changeColOff();" onclick="getBackToNick();">
                 < Change name
             </button>
@@ -49,13 +49,13 @@
             
             <div style="text-align:center;padding-top: 12.5%">
                 <button id="newgame" class = "button buttonRed" onmouseover="isItOkay();" onmouseout="isItNo();" onclick="selectNew()">
-                    New game
+                    New Room
                 </button>
             </div>
             
             <div style="font-size: 100%; text-align:center; position: relative;">
                 <button id ="browse" class = "button buttonRed" onmouseover="isItB();" onmouseout="isItNoB();" onclick = "gamebrowser();">
-                    Browse games
+                    Browse rooms
                 </button>   
             </div>
             
