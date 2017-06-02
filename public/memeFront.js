@@ -191,16 +191,16 @@ function buildGame(gamename)
     socket.emit("joinRoom", gamename, socket.id);
     //***we need to make an array of card the amount of cards be 1 - the max players max you do this I will make 4 for demonstration purposes
     //must send this function amount of players too in the future
-    /*
+    
     var players = 4;
     for(r = 0; r < players; r++){
         var card = document.createElement("div");
         card.className = "w3-card-4 w3-yellow w3-center";
         card.style = "width:10%; float:center"
-        document.body.appendChild(card);
+        document.getElementById("wrap").appendChild(card);
         card.innerHTML = "a meme";
     }
-    */
+   
     
 }
 
@@ -358,6 +358,24 @@ function placehold(game)
         document.getElementById("serve").childNodes[rep].style.backgroundColor = "white";
         game.setAttribute("selected", "false");
     }
+    
+    
+    if(game.getAttribute("pw") !== "" && document.getElementById("testfor") === null)
+    {
+        testfor = document.createElement("input");
+        testfor.id = "testfor";
+        testfor.type = "text";
+        testfor.placeholder = "password";
+        testfor.style.textAlign = "left"
+        document.getElementById("browse").appendChild(testfor);
+        document.getElementById("browse").onclick = function(){pwcheck(game)};
+    }
+    
+    else if(game.getAttribute("pw") === "" && document.getElementById("testfor") !== null)
+    {
+           document.getElementById("browse").removeChild(testfor); 
+    }
+    
     game.style.color = "white";
     game.style.backgroundColor = "orange";
     game.setAttribute("selected", "true");
