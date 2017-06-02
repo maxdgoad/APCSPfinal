@@ -200,7 +200,7 @@ function buildGame(gamename)
     
     t = document.createElement("input");
     t.type = "text";
-    t.style = "bottom: 0; left: 0;  position: absolute; width: 110%"
+    t.style = "bottom: 0; color: black; border: 4px solid #000000; left: 0;  position: absolute; width: 110%"
     t.onkeydown = function(){
         if(event.keyCode == 13){
          add(t.value, gamename);   
