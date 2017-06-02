@@ -91,6 +91,12 @@ function menu()
     
         document.body.removeChild(document.getElementById("wrap"));
     }
+    
+    if(document.getElementById("canvas") !== null)
+    {
+    
+        document.body.removeChild(document.getElementById("canvas"));
+    }
     //rating: could be improved
     
     //This function hides everythings else and displays the main menu (the new game, browse games, info screen)
@@ -131,6 +137,7 @@ function menu()
     document.getElementById("info").style.display = "inline";
  
     document.getElementById("init").style.display = "none"; 
+    
     document.getElementById("KungFuKenny").style.display = "none";
     
     document.getElementById("newgame").onclick = selectNew;
@@ -191,6 +198,7 @@ function buildGame(gamename)
    // wrap.appendChild(send);
 
     canvas = document.createElement("canvas");
+    canvas.id = "canvas"
     canvas.className = "whiteboard";
     
     document.body.appendChild(canvas);
