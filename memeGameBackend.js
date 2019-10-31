@@ -1,4 +1,4 @@
-var io;
+ var io;
 var gameSocket;
 var gamelist = [];
 var players = 0;
